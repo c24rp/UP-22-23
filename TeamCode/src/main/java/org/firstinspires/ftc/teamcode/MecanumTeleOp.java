@@ -30,10 +30,7 @@ public class MecanumTeleOp extends OpMode {
     @Override
     public void start() {
         runtime.reset();
-//        rb.resetEncoder(rb.frMotor);
-//        rb.resetEncoder(rb.flMotor);
-//        rb.resetEncoder(rb.blMotor);
-//        rb.resetEncoder(rb.brMotor);
+
     }
 
     @Override
@@ -43,7 +40,8 @@ public class MecanumTeleOp extends OpMode {
         driveChassis();
 
         moveDuck();
-
+        liftForward();
+        liftBackward();
         IntakeIn();
         IntakeOut();
 
@@ -54,6 +52,7 @@ public class MecanumTeleOp extends OpMode {
 
     }
 
+    //moves the the spinning
     private void moveDuck() {
         if(gamepad1.a){
             rb.duckmotor.setPower(-0.5);
@@ -63,43 +62,83 @@ public class MecanumTeleOp extends OpMode {
         }
     }
 
+    //Intake In
     private void IntakeIn() {
         if(gamepad1.right_bumper){
-            rb.intakemotor.setPower(0.7);
+            rb.intakemotor.setPower(1.0);
         }
         else {
             rb.intakemotor.setPower(0);
         }
     }
 
+    //Intake Out
     private void IntakeOut() {
         if(gamepad1.left_bumper){
-            rb.intakemotor.setPower(-0.7);
+            rb.intakemotor.setPower(-1.0);
         }
         else {
             rb.intakemotor.setPower(0);
         }
     }
 
+    //moves the lift up
+    private void liftForward() {
+        if(gamepad1.b){
+            rb.liftmotor.setPower(1);
+        }
+        else {
+            rb.liftmotor.setPower(0);
+        }
+    }
+
+    private void liftBackward() {
+        if(gamepad1.x){
+            rb.liftmotor.setPower(-1);
+        }
+        else {
+            rb.liftmotor.setPower(0);
+        }
+    }
 
 
     private void driveChassis() {
-        float leftY = -gamepad1.left_stick_y;
-        float leftX = gamepad1.left_stick_x;
-        float rightX = gamepad1.right_stick_x;
+        double y = -gamepad1.left_stick_y;
+        double x = gamepad1.left_stick_x * 1.1;
+        double rx = gamepad1.right_stick_x;
 
-        double pow;
-        if (gamepad1.right_trigger >= TRIGGER_THRESHOLD) {
-            pow = DRIVE_POWER_SLOW;
-        } else {
-            pow = DRIVE_POWER;
-        }
 
-        if (leftX * leftX + leftY * leftY >= DRIVE_STICK_THRESHOLD_SQUARED || Math.abs(rightX) >= DRIVE_STICK_THRESHOLD) {
-            rb.drive(leftX, leftY, rightX, pow);
-        } else {
-            rb.driveStop();
-        }
+        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
+        double frontLeftPower = (y + x + rx) / denominator;
+        double backLeftPower = (y - x + rx) / denominator;
+        double frontRightPower = (y - x - rx) / denominator;
+        double backRightPower = (y + x - rx) / denominator;
+
+        rb.flMotor.setPower(frontLeftPower);
+        rb.blMotor.setPower(backLeftPower);
+        rb.frMotor.setPower(frontRightPower);
+        rb.brMotor.setPower(backRightPower);
+
+
+
+
+
+//        float leftY = -gamepad1.left_stick_y;
+//        float leftX = gamepad1.left_stick_x;
+//        float rightX = gamepad1.right_stick_x;
+//
+//        double pow;
+//        if (gamepad1.right_trigger >= TRIGGER_THRESHOLD) {
+//            pow = DRIVE_POWER_SLOW;
+//        } else {
+//            pow = DRIVE_POWER;
+//        }
+//
+//        if (leftX * leftX + leftY * leftY >= DRIVE_STICK_THRESHOLD_SQUARED || Math.abs(rightX) >= DRIVE_STICK_THRESHOLD) {
+//            rb.drive(leftX, leftY, rightX, pow);
+//        } else {
+//            rb.driveStop();
+//        }
     }
 }
 

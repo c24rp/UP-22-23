@@ -51,7 +51,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
         driveChassis();
 
-        moveDuck();
+//        moveDuck();
 
         IntakeIn();
         IntakeOut();
@@ -79,14 +79,14 @@ import com.qualcomm.robotcore.util.ElapsedTime;
         }
     }
 
-    private void moveDuck() {
-        if(gamepad2.a){
-            rb.duckmotor.setPower(-0.5);
-        }
-        else {
-            rb.duckmotor.setPower(0);
-        }
-    }
+//    private void moveDuck() {
+//        if(gamepad2.a){
+//            rb.duckmotor.setPower(-0.5);
+//        }
+//        else {
+//            rb.duckmotor.setPower(0);
+//        }
+//    }
 
     private void IntakeIn() {
         if(gamepad2.right_bumper){
