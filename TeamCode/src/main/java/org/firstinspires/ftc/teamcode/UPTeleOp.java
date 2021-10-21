@@ -4,19 +4,26 @@ import static org.firstinspires.ftc.teamcode.Constants.DRIVE_POWER;
 import static org.firstinspires.ftc.teamcode.Constants.DRIVE_POWER_SLOW;
 import static org.firstinspires.ftc.teamcode.Constants.DRIVE_STICK_THRESHOLD;
 import static org.firstinspires.ftc.teamcode.Constants.DRIVE_STICK_THRESHOLD_SQUARED;
+import static org.firstinspires.ftc.teamcode.Constants.LS_DOWN;
+import static org.firstinspires.ftc.teamcode.Constants.LS_UP;
+import static org.firstinspires.ftc.teamcode.Constants.RS_DOWN;
+import static org.firstinspires.ftc.teamcode.Constants.RS_UP;
 import static org.firstinspires.ftc.teamcode.Constants.TRIGGER_THRESHOLD;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+@TeleOp(name = "UPTeleOp", group = "TeleOp")
+@Disabled
+    public class UPTeleOp extends OpMode {
 
-@TeleOp(name = "MecanumTeleOp", group = "TeleOp")
-public class MecanumTeleOp extends OpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
 
     private MecanumRobot rb = new MecanumRobot();
+
 
     @Override
     public void init() {
@@ -27,18 +34,20 @@ public class MecanumTeleOp extends OpMode {
         telemetry.addData("Status", "Initialized");
     }
 
+
     @Override
     public void start() {
+        // Reset elapsed time
         runtime.reset();
-//        rb.resetEncoder(rb.frMotor);
-//        rb.resetEncoder(rb.flMotor);
-//        rb.resetEncoder(rb.blMotor);
-//        rb.resetEncoder(rb.brMotor);
     }
+
+
 
     @Override
     public void loop() {
         telemetry.addData("Status", "Looping");
+
+        driveChassis();
 
         driveChassis();
 
@@ -47,40 +56,8 @@ public class MecanumTeleOp extends OpMode {
         IntakeIn();
         IntakeOut();
 
-//        telemetry.addData("frEncoder", rb.frMotor.getCurrentPosition());
-//        telemetry.addData("flEncoder", rb.flMotor.getCurrentPosition());
-//        telemetry.addData("blEncoder", rb.blMotor.getCurrentPosition());
-//        telemetry.update();
 
     }
-
-    private void moveDuck() {
-        if(gamepad1.a){
-            rb.duckmotor.setPower(-0.5);
-        }
-        else {
-            rb.duckmotor.setPower(0);
-        }
-    }
-
-    private void IntakeIn() {
-        if(gamepad1.right_bumper){
-            rb.intakemotor.setPower(0.7);
-        }
-        else {
-            rb.intakemotor.setPower(0);
-        }
-    }
-
-    private void IntakeOut() {
-        if(gamepad1.left_bumper){
-            rb.intakemotor.setPower(-0.7);
-        }
-        else {
-            rb.intakemotor.setPower(0);
-        }
-    }
-
 
 
     private void driveChassis() {
@@ -101,5 +78,31 @@ public class MecanumTeleOp extends OpMode {
             rb.driveStop();
         }
     }
-}
 
+    private void moveDuck() {
+        if(gamepad2.a){
+            rb.duckmotor.setPower(-0.5);
+        }
+        else {
+            rb.duckmotor.setPower(0);
+        }
+    }
+
+    private void IntakeIn() {
+        if(gamepad2.right_bumper){
+            rb.intakemotor.setPower(0.7);
+        }
+        else {
+            rb.intakemotor.setPower(0);
+        }
+    }
+
+    private void IntakeOut() {
+        if(gamepad2.left_bumper){
+            rb.intakemotor.setPower(-0.7);
+        }
+        else {
+            rb.intakemotor.setPower(0);
+        }
+    }
+}
