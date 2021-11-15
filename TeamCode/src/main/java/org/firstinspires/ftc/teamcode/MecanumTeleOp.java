@@ -40,10 +40,8 @@ public class MecanumTeleOp extends OpMode {
         driveChassis();
 
         moveDuck();
-        liftForward();
-        liftBackward();
-        IntakeIn();
-        IntakeOut();
+        lift();
+        Intake();
 
 //        telemetry.addData("frEncoder", rb.frMotor.getCurrentPosition());
 //        telemetry.addData("flEncoder", rb.flMotor.getCurrentPosition());
@@ -62,18 +60,11 @@ public class MecanumTeleOp extends OpMode {
         }
     }
 
-    //Intake In
-    private void IntakeIn() {
+    //Intake
+    private void Intake() {
         if(gamepad1.right_bumper){
             rb.intakemotor.setPower(1.0);
         }
-        else {
-            rb.intakemotor.setPower(0);
-        }
-    }
-
-    //Intake Out
-    private void IntakeOut() {
         if(gamepad1.left_bumper){
             rb.intakemotor.setPower(-1.0);
         }
@@ -83,16 +74,10 @@ public class MecanumTeleOp extends OpMode {
     }
 
     //moves the lift up
-    private void liftForward() {
+    private void lift() {
         if(gamepad1.b){
             rb.liftmotor.setPower(1);
         }
-        else {
-            rb.liftmotor.setPower(0);
-        }
-    }
-
-    private void liftBackward() {
         if(gamepad1.x){
             rb.liftmotor.setPower(-1);
         }
@@ -102,16 +87,18 @@ public class MecanumTeleOp extends OpMode {
     }
 
 
+
+
     private void driveChassis() {
         double y = -gamepad1.left_stick_y;
         double x = gamepad1.left_stick_x * 1.1;
-        double rx = gamepad1.right_stick_x;
+        double rx = gamepad1.right_stick_x * 0.5;
 
 
         double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
         double frontLeftPower = (y + x + rx) / denominator;
-        double backLeftPower = (y - x + rx) / denominator;
-        double frontRightPower = (y - x - rx) / denominator;
+        double backLeftPower = (y - x - rx) / denominator;
+        double frontRightPower = (y - x + rx) / denominator;
         double backRightPower = (y + x - rx) / denominator;
 
         rb.flMotor.setPower(frontLeftPower);
