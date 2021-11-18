@@ -62,11 +62,12 @@ public class MecanumTeleOp extends OpMode {
     }
 
     //moves the lift up
+    double liftmotorPosition = rb.liftmotor.getCurrentPosition();
     private void lift() {
-        if(gamepad1.b){
+        if(gamepad1.b && rb.liftmotor.getCurrentPosition() < liftmotorPosition){
             rb.liftmotor.setPower(1);
         }
-        if(gamepad1.x){
+        if(gamepad1.x ){
             rb.liftmotor.setPower(-1);
         }
         else {

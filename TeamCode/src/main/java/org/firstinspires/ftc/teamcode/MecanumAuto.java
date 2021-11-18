@@ -12,11 +12,7 @@ public abstract class MecanumAuto extends LinearOpMode {
     private ElapsedTime time = new ElapsedTime();
 
 
-
-
-    public void RunOpMode(){
-
-
+    public void runOpMode(){
         while(opModeIsActive()){
             duck();
             park();
@@ -26,12 +22,12 @@ public abstract class MecanumAuto extends LinearOpMode {
 
     public void moveToDeposit(){
         // deposit
-            // move to location
-            // extend arm
-            // run the servo for the box
-            // reverse servo
-            // reverse the arm
-            // then run duck code
+        // move to location
+        // extend arm
+        // run the servo for the box
+        // reverse servo
+        // reverse the arm
+        // then run duck code
     }
     public void duck(){
         double currentTime = time.milliseconds();
@@ -61,13 +57,14 @@ public abstract class MecanumAuto extends LinearOpMode {
     }
 
     public void wait(int waitTime){
-       try {
-           Thread.sleep(waitTime);
-       }
-           catch(InterruptedException ex){
-               Thread.currentThread().interrupt();
-           }
-       }
-
+        try {
+            Thread.sleep(waitTime);
+        }
+        catch(InterruptedException ex){
+            Thread.currentThread().interrupt();
+        }
     }
+
+}
+
 
