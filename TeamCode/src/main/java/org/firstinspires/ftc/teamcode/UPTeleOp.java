@@ -6,8 +6,6 @@ import static org.firstinspires.ftc.teamcode.Constants.DRIVE_STICK_THRESHOLD;
 import static org.firstinspires.ftc.teamcode.Constants.DRIVE_STICK_THRESHOLD_SQUARED;
 import static org.firstinspires.ftc.teamcode.Constants.LS_DOWN;
 import static org.firstinspires.ftc.teamcode.Constants.LS_UP;
-import static org.firstinspires.ftc.teamcode.Constants.RS_DOWN;
-import static org.firstinspires.ftc.teamcode.Constants.RS_UP;
 import static org.firstinspires.ftc.teamcode.Constants.TRIGGER_THRESHOLD;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -37,72 +35,76 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
     @Override
     public void start() {
-        // Reset elapsed time
         runtime.reset();
+        rb.resetEncoder(rb.liftmotor);
+
     }
-
-
 
     @Override
     public void loop() {
         telemetry.addData("Status", "Looping");
 
         driveChassis();
-
-        driveChassis();
-
-//        moveDuck();
-
-        IntakeIn();
-        IntakeOut();
-
-
+        moveDuck();
+        lift();
+        intake();
     }
+
+    //moves the the spinning wheel
+    private void moveDuck() {
+        if(gamepad2.a){
+            rb.duckmotor.setPower(-0.5);
+        }
+        else {
+            rb.duckmotor.setPower(0);
+        }
+    }
+
+    //Intake
+    private void intake() {
+        if(gamepad2.b){
+            rb.intakemotor.setPower(1);
+        }
+        if(gamepad1.x){
+            rb.intakemotor.setPower(-1);
+        }
+        else {
+            rb.intakemotor.setPower(0);
+        }
+    }
+
+    //moves the lift up
+    private void lift() {
+        if(gamepad2.left_bumper){
+            rb.liftmotor.setPower(1);
+        }
+        if(gamepad2.right_bumper){
+            rb.liftmotor.setPower(-1);
+        }
+        else {
+            rb.liftmotor.setPower(0);
+        }
+    }
+
+
 
 
     private void driveChassis() {
-        float leftY = -gamepad1.left_stick_y;
-        float leftX = gamepad1.left_stick_x;
-        float rightX = gamepad1.right_stick_x;
+        double y = -gamepad2.left_stick_y;
+        double x = gamepad2.left_stick_x * 1.1;
+        double rx = gamepad2.right_stick_x * 0.4;
 
-        double pow;
-        if (gamepad1.right_trigger >= TRIGGER_THRESHOLD) {
-            pow = DRIVE_POWER_SLOW;
-        } else {
-            pow = DRIVE_POWER;
-        }
 
-        if (leftX * leftX + leftY * leftY >= DRIVE_STICK_THRESHOLD_SQUARED || Math.abs(rightX) >= DRIVE_STICK_THRESHOLD) {
-            rb.drive(leftX, leftY, rightX, pow);
-        } else {
-            rb.driveStop();
-        }
-    }
+        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
+        double frontLeftPower = (y + x + rx) / denominator;
+        double backLeftPower = (y - x - rx) / denominator;
+        double frontRightPower = (y - x + rx) / denominator;
+        double backRightPower = (y + x - rx) / denominator;
 
-//    private void moveDuck() {
-//        if(gamepad2.a){
-//            rb.duckmotor.setPower(-0.5);
-//        }
-//        else {
-//            rb.duckmotor.setPower(0);
-//        }
-//    }
+        rb.flMotor.setPower(frontLeftPower);
+        rb.blMotor.setPower(backLeftPower);
+        rb.frMotor.setPower(frontRightPower);
+        rb.brMotor.setPower(backRightPower);
 
-    private void IntakeIn() {
-        if(gamepad2.right_bumper){
-            rb.intakemotor.setPower(0.7);
-        }
-        else {
-            rb.intakemotor.setPower(0);
-        }
-    }
-
-    private void IntakeOut() {
-        if(gamepad2.left_bumper){
-            rb.intakemotor.setPower(-0.7);
-        }
-        else {
-            rb.intakemotor.setPower(0);
-        }
     }
 }

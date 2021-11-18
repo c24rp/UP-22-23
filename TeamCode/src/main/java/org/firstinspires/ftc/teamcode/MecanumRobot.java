@@ -1,13 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
-import static org.firstinspires.ftc.teamcode.Constants.HOOK1_DOWN;
-import static org.firstinspires.ftc.teamcode.Constants.HOOK1_UP;
-import static org.firstinspires.ftc.teamcode.Constants.HOOK2_DOWN;
-import static org.firstinspires.ftc.teamcode.Constants.HOOK2_UP;
-import static org.firstinspires.ftc.teamcode.Constants.LS_DOWN;
-import static org.firstinspires.ftc.teamcode.Constants.LS_UP;
-import static org.firstinspires.ftc.teamcode.Constants.RS_DOWN;
-import static org.firstinspires.ftc.teamcode.Constants.RS_UP;
+
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -30,6 +23,7 @@ public class MecanumRobot {
     DcMotor duckmotor= null;
     DcMotor liftmotor= null;
     DcMotor intakemotor = null;
+    Servo boxServo = null;
 
     LinearOpMode opMode;
 
@@ -44,6 +38,7 @@ public class MecanumRobot {
         duckmotor = hardwareMap.get(DcMotor.class, "duck");
         intakemotor = hardwareMap.get(DcMotor.class, "intake");
         liftmotor = hardwareMap.get(DcMotor.class, "lift");
+        boxServo = hardwareMap.get(Servo.class, "boxServo");
 
 
         // Set motor directions
@@ -51,6 +46,7 @@ public class MecanumRobot {
         frMotor.setDirection(DcMotor.Direction.FORWARD);
         blMotor.setDirection(DcMotor.Direction.FORWARD);
         brMotor.setDirection(DcMotor.Direction.FORWARD);
+        liftmotor.setDirection(DcMotor.Direction.REVERSE);
         intakemotor.setDirection(DcMotor.Direction.REVERSE);
 
         // Set all motors to brake when power is zero
@@ -62,6 +58,11 @@ public class MecanumRobot {
         intakemotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         liftmotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+    }
+
+    void resetEncoder(DcMotor motor) {
+        motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     void drive(double x_stick, double y_stick, double x_right_stick, double multiplier) {
@@ -130,5 +131,10 @@ public class MecanumRobot {
     void liftUp(){
         liftmotor.setPower(1.0);
     }
+
+    public void hammerBack(){
+        boxServo.setPosition(0.5);
+    }
+    public void hammerPush(){ boxServo.setPosition(-0.5); }
 
 }

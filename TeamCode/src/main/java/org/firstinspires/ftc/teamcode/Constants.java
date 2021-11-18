@@ -18,26 +18,6 @@ public final class Constants {
     public static final double LS_UP = 0.6;
     public static final double LS_DOWN = .35;
 
-    public static final double RS_UP = .0;
-    public static final double RS_DOWN = .3;
-
-    public static final double HOOK1_UP = .75;
-    public static final double HOOK1_DOWN = .25;
-
-    public static final double HOOK2_UP = .0;
-    public static final double HOOK2_DOWN = .8;
-
-    //Encoder Constants
-
-    public static final int flConstant1 = 0;
-    public static final int flConstant2 = 0;
-    public static final int flConstant3 = 0;
-
-    public static final int frConstant1 = 0;
-    public static final int frConstant2 = 0;
-
-    public static final int blConstant1 = 0;
-
 
     private Constants() {
     }

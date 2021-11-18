@@ -1,11 +1,5 @@
 package org.firstinspires.ftc.teamcode;
 
-import static org.firstinspires.ftc.teamcode.Constants.DRIVE_POWER;
-import static org.firstinspires.ftc.teamcode.Constants.DRIVE_POWER_SLOW;
-import static org.firstinspires.ftc.teamcode.Constants.DRIVE_STICK_THRESHOLD;
-import static org.firstinspires.ftc.teamcode.Constants.DRIVE_STICK_THRESHOLD_SQUARED;
-import static org.firstinspires.ftc.teamcode.Constants.TRIGGER_THRESHOLD;
-
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -30,6 +24,7 @@ public class MecanumTeleOp extends OpMode {
     @Override
     public void start() {
         runtime.reset();
+        rb.resetEncoder(rb.liftmotor);
 
     }
 
@@ -38,19 +33,12 @@ public class MecanumTeleOp extends OpMode {
         telemetry.addData("Status", "Looping");
 
         driveChassis();
-
         moveDuck();
         lift();
-        Intake();
-
-//        telemetry.addData("frEncoder", rb.frMotor.getCurrentPosition());
-//        telemetry.addData("flEncoder", rb.flMotor.getCurrentPosition());
-//        telemetry.addData("blEncoder", rb.blMotor.getCurrentPosition());
-//        telemetry.update();
-
+        intake();
     }
 
-    //moves the the spinning
+    //moves the the spinning wheel
     private void moveDuck() {
         if(gamepad1.a){
             rb.duckmotor.setPower(-0.5);
@@ -61,12 +49,12 @@ public class MecanumTeleOp extends OpMode {
     }
 
     //Intake
-    private void Intake() {
+    private void intake() {
         if(gamepad1.right_bumper){
-            rb.intakemotor.setPower(1.0);
+            rb.intakemotor.setPower(1);
         }
         if(gamepad1.left_bumper){
-            rb.intakemotor.setPower(-1.0);
+            rb.intakemotor.setPower(-1);
         }
         else {
             rb.intakemotor.setPower(0);
