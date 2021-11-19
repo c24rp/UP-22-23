@@ -137,4 +137,67 @@ public class MecanumRobot {
     }
     public void hammerPush(){ boxServo.setPosition(-0.5); }
 
+
+
+    void driveForwardByEncoder(int positionChange, DcMotor motor, double power) {
+        power = Math.abs(power);
+        int oldPosition = motor.getCurrentPosition();
+        int targetPosition = oldPosition + positionChange;
+
+        if (positionChange > 0) {
+            driveForward(power);
+            while (opMode.opModeIsActive() && motor.getCurrentPosition() < targetPosition) {
+                Thread.yield();
+            }
+            driveStop();
+        } else if (positionChange < 0) {
+            driveForward(-power);
+            while (opMode.opModeIsActive() && motor.getCurrentPosition() > targetPosition) {
+                Thread.yield();
+            }
+            driveStop();
+        }
+
+    }
+    void strafeRightByEncoder(int positionChange, DcMotor motor, double power) {
+        power = Math.abs(power);
+        int oldPosition = motor.getCurrentPosition();
+        int targetPosition = oldPosition + positionChange;
+
+        if (positionChange > 0) {
+            strafeRight(power);
+            while (opMode.opModeIsActive() && motor.getCurrentPosition() < targetPosition) {
+                Thread.yield();
+            }
+            driveStop();
+        } else if (positionChange < 0) {
+            strafeRight(-power);
+            while (opMode.opModeIsActive() && motor.getCurrentPosition() > targetPosition) {
+                Thread.yield();
+            }
+            driveStop();
+        }
+
+    }
+    void turnClockwiseByEncoder (int positionChange, DcMotor motor, double power){
+        power = Math.abs(power);
+        int oldPosition = motor.getCurrentPosition();
+        int targetPosition = oldPosition + positionChange;
+
+        if (positionChange > 0) {
+            turnClockwise(power);
+            while (opMode.opModeIsActive() && motor.getCurrentPosition() < targetPosition) {
+                Thread.yield();
+            }
+            driveStop();
+        } else if (positionChange < 0) {
+            turnClockwise(-power);
+            while (opMode.opModeIsActive() && motor.getCurrentPosition() > targetPosition) {
+                Thread.yield();
+            }
+            driveStop();
+        }
+    }
+
+
 }

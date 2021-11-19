@@ -25,7 +25,6 @@ public class MecanumTeleOp extends OpMode {
     public void start() {
         runtime.reset();
         rb.resetEncoder(rb.liftmotor);
-
     }
 
     @Override
@@ -36,6 +35,7 @@ public class MecanumTeleOp extends OpMode {
         moveDuck();
         lift();
         intake();
+        servoBox();
     }
 
     //moves the the spinning wheel
@@ -50,10 +50,10 @@ public class MecanumTeleOp extends OpMode {
 
     //Intake
     private void intake() {
-        if(gamepad1.right_bumper){
+        if(gamepad1.b){
             rb.intakemotor.setPower(1);
         }
-        if(gamepad1.left_bumper){
+        if(gamepad1.x){
             rb.intakemotor.setPower(-1);
         }
         else {
@@ -63,14 +63,24 @@ public class MecanumTeleOp extends OpMode {
 
     //moves the lift up
     private void lift() {
-        if(gamepad1.b){
+        if(gamepad1.right_bumper){
             rb.liftmotor.setPower(1);
         }
-        if(gamepad1.x){
+        if(gamepad1.left_bumper){
             rb.liftmotor.setPower(-1);
         }
         else {
             rb.liftmotor.setPower(0);
+        }
+    }
+
+    // this controls the servo that is on the box
+    private void servoBox() {
+        if(gamepad1.dpad_left){
+            rb.boxServo.setPosition(0.1);
+        }
+        if(gamepad1.dpad_right){
+            rb.boxServo.setPosition(0);
         }
     }
 
