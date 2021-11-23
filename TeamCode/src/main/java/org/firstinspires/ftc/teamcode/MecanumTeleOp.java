@@ -83,14 +83,13 @@ public class MecanumTeleOp extends OpMode {
     }
 
     // this controls the servo that is on the box
-    double servoPosition = rb.boxServo.getPosition();
     private void servoBox() {
         if(gamepad1.dpad_left){
-            rb.boxServo.setPosition(servoPosition+ 0.1);
+            rb.boxServo.setPosition(servoBoxStartingPosition + 0.1);
 
         }
         if(gamepad1.dpad_right){
-            rb.boxServo.setPosition(servoPosition);
+            rb.boxServo.setPosition(servoBoxStartingPosition);
         }
     }
 
