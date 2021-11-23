@@ -30,6 +30,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
         rb.init(hardwareMap, null);
 
         telemetry.addData("Status", "Initialized");
+
+        rb.resetEncoder(rb.liftmotor);
     }
 
 
@@ -52,7 +54,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
     //moves the the spinning wheel
     private void moveDuck() {
-        if(gamepad2.a){
+        if(gamepad2.y){
             rb.duckmotor.setPower(-0.5);
         }
         else {
@@ -62,7 +64,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
     //Intake
     private void intake() {
-        if(gamepad2.b){
+        if(gamepad2.a){
             rb.intakemotor.setPower(1);
         }
         if(gamepad1.x){

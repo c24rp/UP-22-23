@@ -12,11 +12,17 @@ public class MecanumTeleOp extends OpMode {
 
     private MecanumRobot rb = new MecanumRobot();
 
+    double liftmotorStartingPosition;
+    double servoBoxStartingPosition;
+
     @Override
     public void init() {
         telemetry.addData("Status", "Initializing");
 
         rb.init(hardwareMap, null);
+
+        liftmotorStartingPosition = rb.liftmotor.getCurrentPosition();
+        liftmotorStartingPosition = rb.boxServo.getPosition();
 
         telemetry.addData("Status", "Initialized");
     }
@@ -49,25 +55,26 @@ public class MecanumTeleOp extends OpMode {
     }
 
     //Intake
-    private void intake() {
-        if(gamepad1.b){
+    private void lift() {
+        if(gamepad1.b && rb.liftmotor.getCurrentPosition() < liftmotorStartingPosition){
             rb.intakemotor.setPower(1);
         }
-        if(gamepad1.x){
-            rb.intakemotor.setPower(-1);
+        if(gamepad1.x && rb.liftmotor.getCurrentPosition() > liftmotorStartingPosition + 1120){
+        rb.intakemotor.setPower(-1);
         }
         else {
             rb.intakemotor.setPower(0);
         }
     }
 
+
     //moves the lift up
-    double liftmotorPosition = rb.liftmotor.getCurrentPosition();
-    private void lift() {
-        if(gamepad1.b && rb.liftmotor.getCurrentPosition() < liftmotorPosition){
-            rb.liftmotor.setPower(1);
+    private void intake() {
+
+        if(gamepad1.right_bumper){
+            rb.liftmotor.setTargetPosition(1);
         }
-        if(gamepad1.x ){
+        if(gamepad1.left_bumper){
             rb.liftmotor.setPower(-1);
         }
         else {
@@ -78,10 +85,11 @@ public class MecanumTeleOp extends OpMode {
     // this controls the servo that is on the box
     private void servoBox() {
         if(gamepad1.dpad_left){
-            rb.boxServo.setPosition(0.1);
+            rb.boxServo.setPosition(servoBoxStartingPosition + 0.1);
+
         }
         if(gamepad1.dpad_right){
-            rb.boxServo.setPosition(0);
+            rb.boxServo.setPosition(servoBoxStartingPosition);
         }
     }
 

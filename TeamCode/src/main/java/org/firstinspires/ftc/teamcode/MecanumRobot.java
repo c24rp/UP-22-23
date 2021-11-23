@@ -58,6 +58,7 @@ public class MecanumRobot {
         duckmotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         intakemotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         liftmotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        liftmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         //liiftmotor encoder
         liftmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODERS);
