@@ -22,7 +22,7 @@ public class MecanumTeleOp extends OpMode {
         rb.init(hardwareMap, null);
 
         liftmotorStartingPosition = rb.liftmotor.getCurrentPosition();
-        liftmotorStartingPosition = rb.boxServo.getPosition();
+        servoBoxStartingPosition = 0;
 
         telemetry.addData("Status", "Initialized");
     }
@@ -72,7 +72,7 @@ public class MecanumTeleOp extends OpMode {
     private void intake() {
 
         if(gamepad1.right_bumper){
-            rb.liftmotor.setTargetPosition(1);
+            rb.liftmotor.setPower(1);
         }
         if(gamepad1.left_bumper){
             rb.liftmotor.setPower(-1);
@@ -85,7 +85,7 @@ public class MecanumTeleOp extends OpMode {
     // this controls the servo that is on the box
     private void servoBox() {
         if(gamepad1.dpad_left){
-            rb.boxServo.setPosition(servoBoxStartingPosition + 0.1);
+            rb.boxServo.setPosition(servoBoxStartingPosition + 0.15);
 
         }
         if(gamepad1.dpad_right){

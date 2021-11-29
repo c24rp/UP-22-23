@@ -16,17 +16,10 @@ public class MecanumRobot {
 
     public static final double THETA_TOLERANCE = 0.04;
     public static double XY_TOLERANCE = 0.05;
-    DcMotor flMotor = null;
-    DcMotor frMotor = null;
-    DcMotor blMotor = null;
-    DcMotor brMotor = null;
-    DcMotor duckmotor= null;
-    DcMotor liftmotor= null;
-    DcMotor intakemotor = null;
+    DcMotor flMotor, frMotor, blMotor, brMotor, duckmotor, intakemotor, liftmotor;
     Servo boxServo = null;
 
     LinearOpMode opMode;
-
 
     void init(HardwareMap hardwareMap, LinearOpMode opMode) {
         this.opMode = opMode;
