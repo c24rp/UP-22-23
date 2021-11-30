@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name = "BlueFoundationAutoEnc", group = "FoundationAuto")
+@Autonomous(name = "AutoEnc")
 public class Auto extends LinearOpMode {
 
     /**
@@ -46,11 +46,8 @@ public class Auto extends LinearOpMode {
         runtime.reset();
 
         rb.strafeRightByEncoder(374, rb.flMotor, .4);
-        rb.driveForwardByEncoder(-1330, rb.flMotor, .4);
+        rb.driveForwardByEncoder(1000, rb.flMotor, 0.9);
+        rb.driveForwardByEncoder(330, rb.flMotor, 0.4);
         Thread.sleep(1250);
-        rb.driveForwardByEncoder(1280, rb.flMotor, .4);
-        rb.turnClockwiseByEncoder(-520,rb.flMotor, .4);
-        rb.driveForwardByEncoder(600, rb.flMotor, .4);
-        rb.strafeRightByEncoder(-1500, rb.flMotor, .4);
     }
 }

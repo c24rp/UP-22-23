@@ -46,6 +46,7 @@ public class MecanumRobot {
         frMotor.setDirection(DcMotor.Direction.FORWARD);
         blMotor.setDirection(DcMotor.Direction.FORWARD);
         brMotor.setDirection(DcMotor.Direction.FORWARD);
+        duckmotor.setDirection(DcMotor.Direction.FORWARD);
         liftmotor.setDirection(DcMotor.Direction.REVERSE);
         intakemotor.setDirection(DcMotor.Direction.REVERSE);
 
