@@ -62,13 +62,13 @@ public class MecanumTeleOp extends OpMode {
     //Intake
     private void lift() {
         if(gamepad1.b){
-            rb.intakemotor.setPower(1);
+            rb.liftmotor.setPower(1);
         }
         if(gamepad1.x){
-            rb.intakemotor.setPower(-1);
+            rb.liftmotor.setPower(-1);
         }
         else {
-            rb.intakemotor.setPower(0);
+            rb.liftmotor.setPower(0);
         }
     }
 
@@ -76,13 +76,13 @@ public class MecanumTeleOp extends OpMode {
     //moves the lift up
     private void intake() {
         if(gamepad1.right_bumper){
-            rb.liftmotor.setPower(1);
+            rb.intakemotor.setPower(1);
         }
         if(gamepad1.left_bumper){
-            rb.liftmotor.setPower(-1);
+            rb.intakemotor.setPower(-1);
         }
         else {
-            rb.liftmotor.setPower(0);
+            rb.intakemotor.setPower(0);
         }
     }
 
