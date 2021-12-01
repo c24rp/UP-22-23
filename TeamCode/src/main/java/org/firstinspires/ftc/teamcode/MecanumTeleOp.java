@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
@@ -49,6 +51,9 @@ public class MecanumTeleOp extends OpMode {
         if(gamepad1.a){
             rb.duckmotor.setPower(-0.5);
         }
+        if(gamepad1.y){
+            rb.duckmotor.setPower(0.5);
+        }
         else {
             rb.duckmotor.setPower(0);
         }
@@ -56,11 +61,11 @@ public class MecanumTeleOp extends OpMode {
 
     //Intake
     private void lift() {
-        if(gamepad1.b && rb.liftmotor.getCurrentPosition() < liftmotorStartingPosition){
+        if(gamepad1.b){
             rb.intakemotor.setPower(1);
         }
-        if(gamepad1.x && rb.liftmotor.getCurrentPosition() > liftmotorStartingPosition + 1120){
-        rb.intakemotor.setPower(-1);
+        if(gamepad1.x){
+            rb.intakemotor.setPower(-1);
         }
         else {
             rb.intakemotor.setPower(0);
@@ -70,7 +75,6 @@ public class MecanumTeleOp extends OpMode {
 
     //moves the lift up
     private void intake() {
-
         if(gamepad1.right_bumper){
             rb.liftmotor.setPower(1);
         }
@@ -85,12 +89,13 @@ public class MecanumTeleOp extends OpMode {
     // this controls the servo that is on the box
     private void servoBox() {
         if(gamepad1.dpad_left){
-            rb.boxServo.setPosition(servoBoxStartingPosition + 0.15);
+            rb.boxServo.setPosition(0);
 
         }
         if(gamepad1.dpad_right){
-            rb.boxServo.setPosition(servoBoxStartingPosition);
+            rb.boxServo.setPosition(-0.75);
         }
+
     }
 
 
