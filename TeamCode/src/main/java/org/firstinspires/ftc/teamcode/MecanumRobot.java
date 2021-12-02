@@ -24,6 +24,11 @@ public class MecanumRobot {
     DcMotor liftmotor= null;
     DcMotor intakemotor = null;
     Servo boxServo = null;
+    static final double     COUNTS_PER_MOTOR_REV    = 537.6 ;    // eg: TETRIX Motor Encoder
+    static final double     DRIVE_GEAR_REDUCTION    = 1 ;     // This is < 1.0 if geared UP
+    static final double     WHEEL_DIAMETER_INCHES   = 3.937 ;     // For figuring circumference
+    static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
+            (WHEEL_DIAMETER_INCHES * 3.1415);
 
     LinearOpMode opMode;
 
@@ -107,8 +112,8 @@ public class MecanumRobot {
 
     void turnClockwise(double power) {
         flMotor.setPower(power);
-        blMotor.setPower(power);
-        frMotor.setPower(-power);
+        blMotor.setPower(-power);
+        frMotor.setPower(power);
         brMotor.setPower(-power);
     }
 
@@ -141,10 +146,11 @@ public class MecanumRobot {
 
 
 
-    void driveForwardByEncoder(int positionChange, DcMotor motor, double power) {
+    void driveForwardByEncoder(int inches, DcMotor motor, double power) {
         power = Math.abs(power);
+        double positionChange = inches * COUNTS_PER_INCH;
         int oldPosition = motor.getCurrentPosition();
-        int targetPosition = oldPosition + positionChange;
+        double targetPosition = oldPosition + positionChange;
 
         if (positionChange > 0) {
             driveForward(power);
@@ -161,10 +167,11 @@ public class MecanumRobot {
         }
 
     }
-    void strafeRightByEncoder(int positionChange, DcMotor motor, double power) {
+    void strafeRightByEncoder(int inches, DcMotor motor, double power) {
         power = Math.abs(power);
+        double positionChange = COUNTS_PER_INCH * inches;
         int oldPosition = motor.getCurrentPosition();
-        int targetPosition = oldPosition + positionChange;
+        double targetPosition = oldPosition + positionChange;
 
         if (positionChange > 0) {
             strafeRight(power);
@@ -181,10 +188,11 @@ public class MecanumRobot {
         }
 
     }
-    void turnClockwiseByEncoder (int positionChange, DcMotor motor, double power){
+    void turnClockwiseByEncoder (int inches, DcMotor motor, double power){
+        double positionChange = COUNTS_PER_INCH * inches;
         power = Math.abs(power);
         int oldPosition = motor.getCurrentPosition();
-        int targetPosition = oldPosition + positionChange;
+        double targetPosition = oldPosition + positionChange;
 
         if (positionChange > 0) {
             turnClockwise(power);
