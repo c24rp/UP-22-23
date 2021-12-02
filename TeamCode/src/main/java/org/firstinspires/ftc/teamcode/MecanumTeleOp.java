@@ -61,10 +61,10 @@ public class MecanumTeleOp extends OpMode {
 
     //Intake
     private void lift() {
-        if(gamepad1.b){
+        if(gamepad2.b){
             rb.intakemotor.setPower(1);
         }
-        if(gamepad1.x){
+        if(gamepad2.x){
             rb.intakemotor.setPower(-1);
         }
         else {
@@ -75,10 +75,10 @@ public class MecanumTeleOp extends OpMode {
 
     //moves the lift up
     private void intake() {
-        if(gamepad1.right_bumper){
+        if(gamepad2.right_bumper){
             rb.liftmotor.setTargetPosition(1);
         }
-        if(gamepad1.left_bumper){
+        if(gamepad2.left_bumper){
             rb.liftmotor.setPower(-1);
         }
         else {
@@ -88,15 +88,12 @@ public class MecanumTeleOp extends OpMode {
 
     // this controls the servo that is on the box
     private void servoBox() {
-        if(gamepad1.dpad_up){
-            rb.boxServo.setPosition(servoBoxStartingPosition + 0.25);
+        if(gamepad2.dpad_down){
+            rb.boxServo.setPosition(servoBoxStartingPosition + 0.20);
 
         }
-        if(gamepad1.dpad_right){
-            rb.boxServo.setPosition(servoBoxStartingPosition-0.15);
-        }
-        if(gamepad1.dpad_down){
-            rb.boxServo.setPosition(servoBoxStartingPosition-0.6);
+        if(gamepad2.dpad_right) {
+            rb.boxServo.setPosition(servoBoxStartingPosition - 0.15);
         }
 
     }

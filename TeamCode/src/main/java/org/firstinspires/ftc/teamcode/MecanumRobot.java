@@ -139,7 +139,7 @@ public class MecanumRobot {
 
 
 
-    void driveForwardByEncoder(int inches, DcMotor motor, double power) {
+    void driveForwardByEncoder(double inches, DcMotor motor, double power) {
         power = Math.abs(power);
         double positionChange = inches * COUNTS_PER_INCH;
         int oldPosition = motor.getCurrentPosition();
@@ -160,7 +160,7 @@ public class MecanumRobot {
         }
 
     }
-    void strafeRightByEncoder(int inches, DcMotor motor, double power) {
+    void strafeRightByEncoder(double inches, DcMotor motor, double power) {
         power = Math.abs(power);
         double positionChange = COUNTS_PER_INCH * inches;
         int oldPosition = motor.getCurrentPosition();
@@ -181,7 +181,7 @@ public class MecanumRobot {
         }
 
     }
-    void turnClockwiseByEncoder (int inches, DcMotor motor, double power){
+    void turnClockwiseByEncoder (double inches, DcMotor motor, double power){
         double positionChange = COUNTS_PER_INCH * inches;
         power = Math.abs(power);
         int oldPosition = motor.getCurrentPosition();
