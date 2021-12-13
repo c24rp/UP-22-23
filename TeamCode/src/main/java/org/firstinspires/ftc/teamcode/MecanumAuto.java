@@ -50,6 +50,21 @@ public abstract class MecanumAuto extends LinearOpMode {
         // spin the duck
         // run parking code
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
     public void park(){
         double currentTime = time.milliseconds();

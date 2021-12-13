@@ -104,9 +104,12 @@ import com.qualcomm.robotcore.util.ElapsedTime;
         if(gamepad1.dpad_left){
             rb.boxServo.setPosition(-0.5);
         }
+
+
         if(gamepad1.dpad_right){
             rb.boxServo.setPosition(0.5);
         }
+
 
         else{
             rb.boxServo.setPosition(0);

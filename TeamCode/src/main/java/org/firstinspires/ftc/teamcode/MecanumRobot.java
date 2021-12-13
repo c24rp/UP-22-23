@@ -44,7 +44,7 @@ public class MecanumRobot {
         frMotor.setDirection(DcMotor.Direction.FORWARD);
         blMotor.setDirection(DcMotor.Direction.FORWARD);
         brMotor.setDirection(DcMotor.Direction.FORWARD);
-        duckmotor.setDirection(DcMotor.Direction.FORWARD);
+        duckmotor.setDirection(DcMotor.Direction.REVERSE);
         liftmotor.setDirection(DcMotor.Direction.REVERSE);
         intakemotor.setDirection(DcMotor.Direction.REVERSE);
 
@@ -135,6 +135,7 @@ public class MecanumRobot {
     public void hammerBack(){
         boxServo.setPosition(0.5);
     }
+
     public void hammerPush(){ boxServo.setPosition(-0.5); }
 
 

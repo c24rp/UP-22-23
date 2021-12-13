@@ -15,7 +15,7 @@ public class MecanumTeleOp extends OpMode {
     private MecanumRobot rb = new MecanumRobot();
 
     double liftmotorStartingPosition;
-    double servoBoxStartingPosition = 0.75;
+    double servoBoxStartingPosition = 0;
 
     @Override
     public void init() {
@@ -24,7 +24,7 @@ public class MecanumTeleOp extends OpMode {
         rb.init(hardwareMap, null);
 
         liftmotorStartingPosition = rb.liftmotor.getCurrentPosition();
-        //servoBoxStartingPosition = 0.75;
+//        servoBoxStartingPosition = rb.boxServo.getPosition();
 
         telemetry.addData("Status", "Initialized");
     }
@@ -49,10 +49,11 @@ public class MecanumTeleOp extends OpMode {
     //moves the the spinning wheel
     private void moveDuck() {
         if(gamepad1.a){
-            rb.duckmotor.setPower(-0.5);
+
+            rb.duckmotor.setPower(-0.8);
         }
         if(gamepad1.y){
-            rb.duckmotor.setPower(0.5);
+            rb.duckmotor.setPower(0.8);
         }
         else {
             rb.duckmotor.setPower(0);
@@ -88,12 +89,16 @@ public class MecanumTeleOp extends OpMode {
 
     // this controls the servo that is on the box
     private void servoBox() {
-        if(gamepad2.dpad_down) {
-            rb.boxServo.setPosition(servoBoxStartingPosition - 0.6);
+        if(gamepad2.dpad_left){
+            rb.boxServo.setPosition(servoBoxStartingPosition + 0.2);
 
         }
-        if(gamepad2.dpad_right) {
-            rb.boxServo.setPosition(servoBoxStartingPosition - 0.25);
+        if(gamepad2.dpad_right){
+            rb.boxServo.setPosition(servoBoxStartingPosition - 0.15);
+        }
+
+        if(gamepad2.dpad_down){
+            rb.boxServo.setPosition(servoBoxStartingPosition);
         }
 
     }
@@ -119,7 +124,18 @@ public class MecanumTeleOp extends OpMode {
         rb.brMotor.setPower(backRightPower);
 
 
-
+//        double r = Math.hypot(gamepad1.left_stick_x, gamepad1.left_stick_y);
+//        double robotAngle = Math.atan2(gamepad1.left_stick_y, gamepad1.left_stick_x) - Math.PI / 4;
+//        double rightX = gamepad1.right_stick_x;
+//        final double v1 = r * Math.cos(robotAngle) + rightX;
+//        final double v2 = r * Math.sin(robotAngle) - rightX;
+//        final double v3 = r * Math.sin(robotAngle) + rightX;
+//        final double v4 = r * Math.cos(robotAngle) - rightX;
+//
+//        rb.flMotor.setPower(v1);
+//        rb.blMotor.setPower(v2);
+//        rb.frMotor.setPower(v3);
+//        rb.brMotor.setPower(v4);
 
 
 //        float leftY = -gamepad1.left_stick_y;

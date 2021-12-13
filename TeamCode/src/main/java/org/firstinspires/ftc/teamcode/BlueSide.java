@@ -5,8 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name = "AutoEnc")
-public class Auto extends LinearOpMode {
+@Autonomous(name = "BlueSide")
+public class BlueSide extends LinearOpMode {
 
     /**
      * Amount of time elapsed
@@ -31,10 +31,7 @@ public class Auto extends LinearOpMode {
         rb.blMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rb.brMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        resetEncoder(rb.frMotor);
         resetEncoder(rb.flMotor);
-        resetEncoder(rb.blMotor);
-        resetEncoder(rb.brMotor);
 
         telemetry.addData("Status", "Initialized");
 
@@ -45,9 +42,24 @@ public class Auto extends LinearOpMode {
 
         runtime.reset();
 
-        rb.strafeRightByEncoder(374, rb.flMotor, .4);
-        rb.driveForwardByEncoder(1000, rb.flMotor, 0.9);
-        rb.driveForwardByEncoder(330, rb.flMotor, 0.4);
-        Thread.sleep(1250);
+// Moves forward to place
+        rb.driveForwardByEncoder(19, rb.flMotor, 1);
+        rb.driveForwardByEncoder(3,rb.flMotor,0.3);
+        Thread.sleep(200);
+        // Move backwards
+        rb.driveForwardByEncoder(-10,rb.flMotor,0.7);
+        Thread.sleep(200);
+        // Turn away
+        rb.turnClockwiseByEncoder(-18,rb.flMotor,0.7);
+        Thread.sleep(200);
+        // Strafe toward wall
+        rb.strafeRightByEncoder(-13,rb.flMotor,0.7);
+        Thread.sleep(200);
+        rb.turnClockwiseByEncoder(-2,rb.flMotor,0.3);
+        Thread.sleep(200);
+
+        // Move into warehouse
+        rb.driveForwardByEncoder(42,rb.flMotor,0.7);
+
     }
 }

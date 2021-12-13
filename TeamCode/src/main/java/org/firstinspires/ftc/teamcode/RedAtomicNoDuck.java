@@ -57,7 +57,7 @@ public class RedAtomicNoDuck extends LinearOpMode {
      rb.driveForwardByEncoder(1, rb.flMotor, 0.3);
      // Wait for Atomic
      Thread.sleep(17000);
-     // Move backwards away from Caroseul
+     // Move backwards away from Carosel
      rb.driveForwardByEncoder(-5,rb.flMotor,0.5);
      Thread.sleep(200);
      // Turns to strafe into warehouse
