@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 
 @TeleOp(name = "MecanumTeleOp", group = "TeleOp")
-public class MecanumTeleOp extends OpMode {
+public class TankTeleOp extends OpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -17,14 +17,17 @@ public class MecanumTeleOp extends OpMode {
     double liftmotorStartingPosition;
     double servoBoxStartingPosition = 0;
 
+    double frontLeftPower;
+    double backLeftPower;
+    double frontRightPower;
+    double backRightPower;
+
     @Override
     public void init() {
         telemetry.addData("Status", "Initializing");
 
         rb.init(hardwareMap, null);
 
-        liftmotorStartingPosition = rb.liftmotor.getCurrentPosition();
-//        servoBoxStartingPosition = rb.boxServo.getPosition();
 
         telemetry.addData("Status", "Initialized");
     }
@@ -40,49 +43,21 @@ public class MecanumTeleOp extends OpMode {
         telemetry.addData("Status", "Looping");
 
         driveChassis();
-        moveDuck();
-        lift();
-        intake();
-        servoBox();
 
-        telemetry.addData("Lift Position: ", rb.liftmotor.getCurrentPosition());
+        intake();
+
+
         telemetry.update();
     }
 
-    //moves the the spinning wheel
-    private void moveDuck() {
-        if(gamepad1.a){
-
-            rb.duckmotor.setPower(-0.8);
-        }
-        if(gamepad1.y){
-            rb.duckmotor.setPower(0.8);
-        }
-        else {
-            rb.duckmotor.setPower(0);
-        }
-    }
-
-    //Intake
-    private void lift() {
-        if(gamepad2.b){
-            rb.intakemotor.setPower(1);
-        }
-        if(gamepad2.x){
-            rb.intakemotor.setPower(-1);
-        }
-        else {
-            rb.intakemotor.setPower(0);
-        }
-    }
 
 
     //moves the lift up
     private void intake() {
-        if(gamepad2.right_bumper){
+        if(gamepad1.right_bumper){
             rb.liftmotor.setTargetPosition(1);
         }
-        if(gamepad2.left_bumper){
+        if(gamepad1.left_bumper){
             rb.liftmotor.setPower(-1);
         }
         else {
@@ -90,36 +65,29 @@ public class MecanumTeleOp extends OpMode {
         }
     }
 
-    // this controls the servo that is on the box
-    private void servoBox() {
-        if(gamepad2.dpad_left){
-            rb.boxServo.setPosition(servoBoxStartingPosition + 0.2);
 
-        }
-        if(gamepad2.dpad_right){
-            rb.boxServo.setPosition(servoBoxStartingPosition - 0.15);
-        }
-
-        if(gamepad2.dpad_down){
-            rb.boxServo.setPosition(servoBoxStartingPosition);
-        }
-
-    }
 
 
 
 
     private void driveChassis() {
         double y = -gamepad1.left_stick_y;
-        double x = gamepad1.left_stick_x * 1.1;
-        double rx = gamepad1.right_stick_x * 0.5;
+        double rx = gamepad1.right_stick_x * 1;
 
 
-        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
-        double frontLeftPower = (y + x + rx) / denominator;
-        double backLeftPower = (y - x - rx) / denominator;
-        double frontRightPower = (y - x + rx) / denominator;
-        double backRightPower = (y + x - rx) / denominator;
+
+        if(Math.abs(y) > Math.abs(rx)){
+            frontLeftPower = y;
+            backLeftPower = y;
+            frontRightPower = y;
+            backRightPower = y;
+        }
+        else if(Math.abs(y) < Math.abs(rx)){
+            frontLeftPower = rx;
+            backLeftPower = rx;
+            frontRightPower = -rx;
+            backRightPower = -rx;
+        }
 
         rb.flMotor.setPower(frontLeftPower);
         rb.blMotor.setPower(backLeftPower);
