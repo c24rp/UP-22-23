@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-@TeleOp(name = "MecanumTeleOp", group = "TeleOp")
+@TeleOp(name = "TankTeleOp", group = "TeleOp")
 public class TankTeleOp extends OpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
@@ -87,6 +87,13 @@ public class TankTeleOp extends OpMode {
             backLeftPower = rx;
             frontRightPower = -rx;
             backRightPower = -rx;
+        }
+
+        else {
+            frontLeftPower = 0;
+            backLeftPower = 0;
+            frontRightPower = 0;
+            backRightPower = 0;
         }
 
         rb.flMotor.setPower(frontLeftPower);

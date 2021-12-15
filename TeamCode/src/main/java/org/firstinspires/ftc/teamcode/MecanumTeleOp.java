@@ -107,8 +107,6 @@ public class MecanumTeleOp extends OpMode {
     }
 
 
-
-
     private void driveChassis() {
         double y = -gamepad1.left_stick_y;
         double x = gamepad1.left_stick_x * 1.1;
