@@ -44,6 +44,8 @@ public class TankTeleOp extends OpMode {
 
         driveChassis();
 
+        servoBox();
+
         intake();
 
 
@@ -67,7 +69,21 @@ public class TankTeleOp extends OpMode {
 
 
 
+    // this controls the servo that is on the box
+    private void servoBox() {
+        if(gamepad2.dpad_left){
+            rb.boxServo.setPosition(servoBoxStartingPosition + 0.2);
 
+        }
+        if(gamepad2.dpad_right){
+            rb.boxServo.setPosition(servoBoxStartingPosition - 0.15);
+        }
+
+        if(gamepad2.dpad_down){
+            rb.boxServo.setPosition(servoBoxStartingPosition);
+        }
+
+    }
 
 
     private void driveChassis() {
