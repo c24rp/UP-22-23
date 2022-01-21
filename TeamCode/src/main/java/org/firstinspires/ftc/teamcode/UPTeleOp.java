@@ -11,6 +11,7 @@ import static org.firstinspires.ftc.teamcode.Constants.TRIGGER_THRESHOLD;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 @TeleOp(name = "UPTeleOp", group = "TeleOp")
@@ -22,6 +23,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
     private MecanumRobot rb = new MecanumRobot();
 
+    double liftmotorStartingPosition;
+    double servoBoxStartingPosition;
+
 
     @Override
     public void init() {
@@ -30,6 +34,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
         rb.init(hardwareMap, null);
 
         telemetry.addData("Status", "Initialized");
+
+        liftmotorStartingPosition = rb.liftmotor.getCurrentPosition();
+        liftmotorStartingPosition = rb.boxServo.getPosition();
 
         rb.resetEncoder(rb.liftmotor);
     }
@@ -50,6 +57,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
         moveDuck();
         lift();
         intake();
+        servoBox();
     }
 
     //moves the the spinning wheel
@@ -57,17 +65,19 @@ import com.qualcomm.robotcore.util.ElapsedTime;
         if(gamepad2.y){
             rb.duckmotor.setPower(-0.5);
         }
+        if(gamepad2.a){
+            rb.duckmotor.setPower(0.5);
+        }
         else {
             rb.duckmotor.setPower(0);
         }
     }
 
-    //Intake
-    private void intake() {
-        if(gamepad2.a){
+    private void lift() {
+        if(gamepad2.b){
             rb.intakemotor.setPower(1);
         }
-        if(gamepad1.x){
+        if(gamepad2.x){
             rb.intakemotor.setPower(-1);
         }
         else {
@@ -75,12 +85,13 @@ import com.qualcomm.robotcore.util.ElapsedTime;
         }
     }
 
+
     //moves the lift up
-    private void lift() {
-        if(gamepad2.left_bumper){
-            rb.liftmotor.setPower(1);
-        }
+    private void intake() {
         if(gamepad2.right_bumper){
+            rb.liftmotor.setTargetPosition(1);
+        }
+        if(gamepad2.left_bumper){
             rb.liftmotor.setPower(-1);
         }
         else {
@@ -88,13 +99,31 @@ import com.qualcomm.robotcore.util.ElapsedTime;
         }
     }
 
+    // this controls the servo that is on the box
+    private void servoBox() {
+        if(gamepad1.dpad_left){
+            rb.boxServo.setPosition(-0.5);
+        }
+
+
+        if(gamepad1.dpad_right){
+            rb.boxServo.setPosition(0.5);
+        }
+
+
+        else{
+            rb.boxServo.setPosition(0);
+        }
+    }
+
+
 
 
 
     private void driveChassis() {
-        double y = -gamepad2.left_stick_y;
-        double x = gamepad2.left_stick_x * 1.1;
-        double rx = gamepad2.right_stick_x * 0.4;
+        double y = -gamepad1.left_stick_y;
+        double x = gamepad1.left_stick_x * 1.1;
+        double rx = gamepad1.right_stick_x * 0.5;
 
 
         double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);

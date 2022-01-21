@@ -5,8 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name = "AutoEnc")
-public class Auto extends LinearOpMode {
+@Autonomous(name = "BlueDuck")
+public class BlueDuck extends LinearOpMode {
 
     /**
      * Amount of time elapsed
@@ -31,10 +31,7 @@ public class Auto extends LinearOpMode {
         rb.blMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rb.brMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        resetEncoder(rb.frMotor);
         resetEncoder(rb.flMotor);
-        resetEncoder(rb.blMotor);
-        resetEncoder(rb.brMotor);
 
         telemetry.addData("Status", "Initialized");
 
@@ -45,9 +42,34 @@ public class Auto extends LinearOpMode {
 
         runtime.reset();
 
-        rb.strafeRightByEncoder(374, rb.flMotor, .4);
-        rb.driveForwardByEncoder(1000, rb.flMotor, 0.9);
-        rb.driveForwardByEncoder(330, rb.flMotor, 0.4);
-        Thread.sleep(1250);
+// Moves forward to place
+        rb.driveForwardByEncoder(18, rb.flMotor, 1);
+        rb.driveForwardByEncoder(3,rb.flMotor,0.3);
+        Thread.sleep(200);
+        // Move backwards
+        rb.driveForwardByEncoder(-10,rb.flMotor,0.7);
+        Thread.sleep(200);
+        // Turn away
+        rb.turnClockwiseByEncoder(-18,rb.flMotor,0.7);
+        Thread.sleep(200);
+        // Strafe toward wall
+        rb.strafeRightByEncoder(-13,rb.flMotor,0.7);
+        Thread.sleep(200);
+        // Drive toward the duck, moving slower so as to not bounce
+        rb.driveForwardByEncoder(-30,rb.flMotor,0.7);
+        rb.driveForwardByEncoder(-7,rb.flMotor,0.1);
+        rb.driveForwardByEncoder(-5,rb.flMotor,0.05);
+        // Spin duck for 3 seconds
+        Thread.sleep(200);
+        rb.duckmotor.setPower(0.5);
+        Thread.sleep(3000);
+        rb.duckmotor.setPower(0);
+        // Move toward warehouse
+        rb.driveForwardByEncoder(50,rb.flMotor,0.7);
+        // Turn into the wall so we can get through, LOL
+        rb.turnClockwiseByEncoder(-2,rb.flMotor,0.3);
+        // Move into warehouse
+        rb.driveForwardByEncoder(60,rb.flMotor,0.7);
+
     }
 }

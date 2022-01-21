@@ -5,8 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name = "AutoEnc")
-public class Auto extends LinearOpMode {
+@Autonomous(name = "DuckServoTest")
+public class DuckServoTest extends LinearOpMode {
 
     /**
      * Amount of time elapsed
@@ -44,10 +44,24 @@ public class Auto extends LinearOpMode {
         waitForStart();
 
         runtime.reset();
-
-        rb.strafeRightByEncoder(374, rb.flMotor, .4);
-        rb.driveForwardByEncoder(1000, rb.flMotor, 0.9);
-        rb.driveForwardByEncoder(330, rb.flMotor, 0.4);
-        Thread.sleep(1250);
+        rb.strafeRightByEncoder(-10,rb.flMotor,0.3);
+        rb.driveForwardByEncoder(-30, rb.flMotor, 0.2);
+        Thread.sleep(300);
+        rb.duckmotor.setPower(1);
+        Thread.sleep(2000);
+        rb.duckmotor.setPower(0);
+//
+//       rb.strafeRightByEncoder(6, rb.flMotor, .4);
+//        rb.driveForwardByEncoder(19, rb.flMotor, 0.9);
+//        rb.driveForwardByEncoder(2, rb.flMotor, 0.4);
+//         Thread.sleep(1250);
+////        //CHANGE VALUE TO SAME
+//        rb.driveForwardByEncoder(-13, rb.flMotor,0.4);
+//       Thread.sleep(1000);
+//        rb.turnClockwiseByEncoder(18,rb.flMotor,0.9);
+//     Thread.sleep(1000);
+//       rb.strafeRightByEncoder(10,rb.flMotor,0.9);
+//      //Thread.sleep(1000);
+//     rb.driveForwardByEncoder(60,rb.flMotor,1.0);
     }
 }
