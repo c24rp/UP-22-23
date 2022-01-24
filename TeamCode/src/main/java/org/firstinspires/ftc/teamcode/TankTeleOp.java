@@ -46,6 +46,7 @@ public class TankTeleOp extends OpMode {
 
         lift();
 
+        intake();
 
         telemetry.update();
     }
@@ -65,6 +66,18 @@ public class TankTeleOp extends OpMode {
         }
     }
 
+
+    private void intake() {
+        if(gamepad1.x){
+            rb.intakemotor.setPower(1);
+        }
+        if(gamepad1.b){
+            rb.intakemotor.setPower(-1);
+        }
+        else {
+            rb.intakemotor.setPower(0);
+        }
+    }
 
 
 
