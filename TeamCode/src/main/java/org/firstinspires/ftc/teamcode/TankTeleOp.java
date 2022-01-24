@@ -44,7 +44,7 @@ public class TankTeleOp extends OpMode {
 
         driveChassis();
 
-        intake();
+        lift();
 
 
         telemetry.update();
@@ -53,9 +53,9 @@ public class TankTeleOp extends OpMode {
 
 
     //moves the lift up
-    private void intake() {
+    private void lift() {
         if(gamepad1.right_bumper){
-            rb.liftmotor.setTargetPosition(1);
+            rb.liftmotor.setPower(1);
         }
         if(gamepad1.left_bumper){
             rb.liftmotor.setPower(-1);

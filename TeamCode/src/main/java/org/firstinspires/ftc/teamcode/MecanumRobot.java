@@ -58,14 +58,11 @@ public class MecanumRobot {
         intakemotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         liftmotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         liftmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        //liiftmotor encoder
-        liftmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODERS);
     }
 
     void resetEncoder(DcMotor motor) {
         motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//        motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODERS);
+//        motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     void drive(double x_stick, double y_stick, double x_right_stick, double multiplier) {
