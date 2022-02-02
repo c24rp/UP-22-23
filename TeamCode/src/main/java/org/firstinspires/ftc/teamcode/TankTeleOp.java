@@ -53,7 +53,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
             intake();
 
-            liftEncoder();
+//            liftEncoder();
 
             servoBox();
 
@@ -75,18 +75,18 @@ import com.qualcomm.robotcore.util.ElapsedTime;
             }
         }
 
-        private void liftEncoder() {
-            double x = rb.liftmotor.getCurrentPosition();
-            if(gamepad1.dpad_right && x < liftmotorStartingPosition + 400){
-                rb.liftmotor.setPower(1);
-            }
-            if(gamepad1.dpad_left && x > liftmotorStartingPosition){
-                rb.liftmotor.setPower(-1);
-            }
-            else {
-                rb.liftmotor.setPower(0);
-            }
-        }
+//        private void liftEncoder() {
+//            double x = rb.liftmotor.getCurrentPosition();
+//            if(gamepad1.dpad_right && x < liftmotorStartingPosition + 400){
+//                rb.liftmotor.setPower(1);
+//            }
+//            if(gamepad1.dpad_left && x > liftmotorStartingPosition){
+//                rb.liftmotor.setPower(-1);
+//            }
+//            else {
+//                rb.liftmotor.setPower(0);
+//            }
+//        }
 
         private void servoBox() {
             if(gamepad2.dpad_down) {
@@ -125,16 +125,16 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 
             if(Math.abs(y) > Math.abs(rx)){
-                frontLeftPower = rx;
-                backLeftPower = rx;
-                frontRightPower = -rx;
-                backRightPower = -rx;
-            }
-            else if(Math.abs(y) < Math.abs(rx)){
                 frontLeftPower = y;
                 backLeftPower = y;
                 frontRightPower = y;
                 backRightPower = y;
+            }
+            else if(Math.abs(y) < Math.abs(rx)){
+                frontLeftPower = rx;
+                backLeftPower = rx;
+                frontRightPower = -rx;
+                backRightPower = -rx;
             }
 
             else {
