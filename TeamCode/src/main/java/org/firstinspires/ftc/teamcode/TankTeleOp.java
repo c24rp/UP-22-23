@@ -116,13 +116,22 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 
 
-
-
         private void driveChassis() {
-            double y = -gamepad1.left_stick_x;
+            double y = -gamepad1.left_stick_y;
             double rx = gamepad1.right_stick_y * 1;
 
 
+            rb.flMotor.setPower(y);
+            rb.blMotor.setPower(y);
+            rb.frMotor.setPower(rx);
+            rb.brMotor.setPower(rx);
+        }
+
+
+
+        private void driveChassis2() {
+            double y = -gamepad1.left_stick_x;
+            double rx = gamepad1.right_stick_y * 1;
 
             if(Math.abs(y) > Math.abs(rx)){
                 frontLeftPower = y;
