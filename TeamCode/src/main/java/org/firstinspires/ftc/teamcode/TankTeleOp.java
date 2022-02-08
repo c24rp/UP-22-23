@@ -15,9 +15,10 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
         private MecanumRobot rb = new MecanumRobot();
 
-        double liftmotorStartingPosition;
-        double servoBoxStartingPosition;
+        double liftmotorStartingPosition = 0;
+        double servoPosition = 0;
 
+        double x = 0;
         double frontLeftPower;
         double backLeftPower;
         double frontRightPower;
@@ -29,8 +30,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
             rb.init(hardwareMap, null);
 
-            double liftmotorStartingPosition = rb.liftmotor.getCurrentPosition();
-            double servoBoxStartingPosition = rb.boxServo.getPosition();
+            liftmotorStartingPosition = rb.liftmotor.getCurrentPosition();
 
 
             telemetry.addData("Status", "Initialized");
@@ -39,7 +39,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
         @Override
         public void start() {
             runtime.reset();
-            rb.resetEncoder(rb.liftmotor);
+//            rb.resetEncoder(rb.liftmotor);
 
         }
 
@@ -49,64 +49,76 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
             driveChassis();
 
-            lift();
+            liftEncoder();
 
             intake();
 
-//            liftEncoder();
+//            servoTest();
 
             servoBox();
+
+            duck();
 
             telemetry.update();
         }
 
 
 
-        //moves the lift up
-        private void lift() {
-            if(gamepad1.right_bumper){
-                rb.liftmotor.setPower(1);
+        private void liftEncoder() {
+            double x = rb.liftmotor.getCurrentPosition();
+            telemetry.addData("lift_current_pos", x);
+
+            if(gamepad2.dpad_up){
+                rb.liftmotor.setPower(0.8);
             }
-            else if(gamepad1.left_bumper){
-                rb.liftmotor.setPower(-1);
+            else if(gamepad2.dpad_down ){
+                rb.liftmotor.setPower(-0.4);
             }
             else {
                 rb.liftmotor.setPower(0);
             }
         }
 
-//        private void liftEncoder() {
-//            double x = rb.liftmotor.getCurrentPosition();
-//            if(gamepad1.dpad_right && x < liftmotorStartingPosition + 400){
-//                rb.liftmotor.setPower(1);
-//            }
-//            if(gamepad1.dpad_left && x > liftmotorStartingPosition){
-//                rb.liftmotor.setPower(-1);
+        private void servoBox() {
+            double x = rb.boxServo.getPosition();
+            telemetry.addData("servo_getPos", x);
+//            two button method:
+            if (gamepad2.a && servoPosition <= 0.9){
+                servoPosition += 0.1;
+
+            }
+            if (gamepad2.b && servoPosition >= 0.1){
+                servoPosition -= 0.1;
+            }
+
+            rb.boxServo.setPosition(servoPosition);
+
+//            one button method:
+//            if(gamepad2.a){
+//                rb.boxServo.setPosition(rb.boxServo.getPosition() + 0.1);
+//
 //            }
 //            else {
-//                rb.liftmotor.setPower(0);
+//                rb.boxServo.setPosition(servoBoxStartingPosition);
 //            }
-//        }
-
-        private void servoBox() {
-            if(gamepad2.dpad_down) {
-                rb.boxServo.setPosition(servoBoxStartingPosition - 0.6);
-            }
-            else if(gamepad2.dpad_right) {
-                rb.boxServo.setPosition(servoBoxStartingPosition - 0.25);
-            }
-            else {
-                rb.boxServo.setPosition(servoBoxStartingPosition);
-            }
 
         }
 
+//        private void servoTest() {
+//            if(gamepad2.dpad_up) {
+//                telemetry.addData("Servo", rb.boxServo.getPosition());
+//                rb.boxServo.setPosition(x);
+//                x += 0.04;
+//            }
+//
+//        }
+
 
         private void intake() {
-            if(gamepad1.x){
+            if(gamepad2.right_bumper){
                 rb.intakemotor.setPower(1);
             }
-            else if(gamepad1.b){
+            else if(gamepad2.left_bumper){
                 rb.intakemotor.setPower(-1);
             }
             else {
@@ -114,14 +126,25 @@ import com.qualcomm.robotcore.util.ElapsedTime;
             }
         }
 
+        private void duck() {
+            if(gamepad1.a){
+                rb.duckmotor.setPower(0.5); // Test if either 1 or -1
+            }
+            else if(gamepad1.y){
+                rb.duckmotor.setPower(-0.5); // Test if either 1 or -1
+            }
+            else {
+                rb.duckmotor.setPower(0);
+            }
+        }
 
 
         private void driveChassis() {
             double y = -gamepad1.left_stick_y;
-            double rx = gamepad1.right_stick_y * 1;
+            double rx = gamepad1.right_stick_y;
 
 
-            rb.flMotor.setPower(y);
+            rb.flMotor.setPower(-y);
             rb.blMotor.setPower(y);
             rb.frMotor.setPower(rx);
             rb.brMotor.setPower(rx);

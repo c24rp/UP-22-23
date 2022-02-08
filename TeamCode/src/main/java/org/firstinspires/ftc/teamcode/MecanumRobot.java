@@ -92,8 +92,8 @@ public class MecanumRobot {
     void driveForward(double power) {
         flMotor.setPower(power);
         blMotor.setPower(power);
-        frMotor.setPower(power);
-        brMotor.setPower(power);
+        frMotor.setPower(-power);
+        brMotor.setPower(-power);
     }
 
     void strafeRight(double power) {
@@ -105,14 +105,14 @@ public class MecanumRobot {
 
     void turnClockwise(double power) {
         flMotor.setPower(power);
-        blMotor.setPower(-power);
+        blMotor.setPower(power);
         frMotor.setPower(power);
-        brMotor.setPower(-power);
+        brMotor.setPower(power);
     }
 
 
     void moveduck() {
-        duckmotor.setPower(-0.5);
+        duckmotor.setPower(1);
     }
 
     void intakeIn() { intakemotor.setPower(1.0); }
@@ -144,23 +144,25 @@ public class MecanumRobot {
         power = Math.abs(power);
         double positionChange = inches * COUNTS_PER_INCH;
         int oldPosition = motor.getCurrentPosition();
-        double targetPosition = oldPosition + positionChange;
+        double targetPosition = oldPosition - positionChange; // minus not plus, flipped motor
 
         if (positionChange > 0) {
             driveForward(power);
-            while (opMode.opModeIsActive() && motor.getCurrentPosition() < targetPosition) {
+            while (opMode.opModeIsActive() && motor.getCurrentPosition() > targetPosition) {
+                opMode.telemetry.addData("auto", motor.getCurrentPosition());
                 Thread.yield();
             }
             driveStop();
         } else if (positionChange < 0) {
             driveForward(-power);
-            while (opMode.opModeIsActive() && motor.getCurrentPosition() > targetPosition) {
+            while (opMode.opModeIsActive() && motor.getCurrentPosition() < targetPosition) {
                 Thread.yield();
             }
             driveStop();
         }
 
     }
+
     void strafeRightByEncoder(double inches, DcMotor motor, double power) {
         power = Math.abs(power);
         double positionChange = COUNTS_PER_INCH * inches;
@@ -169,13 +171,13 @@ public class MecanumRobot {
 
         if (positionChange > 0) {
             strafeRight(power);
-            while (opMode.opModeIsActive() && motor.getCurrentPosition() < targetPosition) {
+            while (opMode.opModeIsActive() && -motor.getCurrentPosition() < targetPosition) {
                 Thread.yield();
             }
             driveStop();
         } else if (positionChange < 0) {
             strafeRight(-power);
-            while (opMode.opModeIsActive() && motor.getCurrentPosition() > targetPosition) {
+            while (opMode.opModeIsActive() && -motor.getCurrentPosition() > targetPosition) {
                 Thread.yield();
             }
             driveStop();
@@ -186,17 +188,17 @@ public class MecanumRobot {
         double positionChange = COUNTS_PER_INCH * inches;
         power = Math.abs(power);
         int oldPosition = motor.getCurrentPosition();
-        double targetPosition = oldPosition + positionChange;
+        double targetPosition = oldPosition - positionChange;
 
         if (positionChange > 0) {
             turnClockwise(power);
-            while (opMode.opModeIsActive() && motor.getCurrentPosition() < targetPosition) {
+            while (opMode.opModeIsActive() && motor.getCurrentPosition() > targetPosition) {
                 Thread.yield();
             }
             driveStop();
         } else if (positionChange < 0) {
             turnClockwise(-power);
-            while (opMode.opModeIsActive() && motor.getCurrentPosition() > targetPosition) {
+            while (opMode.opModeIsActive() && motor.getCurrentPosition() < targetPosition) {
                 Thread.yield();
             }
             driveStop();
