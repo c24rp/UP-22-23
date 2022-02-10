@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
+
 @TeleOp(name = "TankTeleOp", group = "TeleOp")
 public class TankTeleOp extends OpMode {
 
@@ -14,9 +15,10 @@ public class TankTeleOp extends OpMode {
 
     private MecanumRobot rb = new MecanumRobot();
 
-    double liftmotorStartingPosition;
-    double servoBoxStartingPosition = 0;
+    double liftmotorStartingPosition = 0;
+    double servoPosition = 0;
 
+    double x = 0;
     double frontLeftPower;
     double backLeftPower;
     double frontRightPower;
@@ -28,6 +30,8 @@ public class TankTeleOp extends OpMode {
 
         rb.init(hardwareMap, null);
 
+        liftmotorStartingPosition = rb.liftmotor.getCurrentPosition();
+
 
         telemetry.addData("Status", "Initialized");
     }
@@ -35,7 +39,8 @@ public class TankTeleOp extends OpMode {
     @Override
     public void start() {
         runtime.reset();
-        rb.resetEncoder(rb.liftmotor);
+//            rb.resetEncoder(rb.liftmotor);
+
     }
 
     @Override
@@ -44,53 +49,112 @@ public class TankTeleOp extends OpMode {
 
         driveChassis();
 
-        servoBox();
+        liftEncoder();
 
         intake();
 
+//            servoTest();
+
+        servoBox();
+
+        duck();
 
         telemetry.update();
     }
 
 
 
-    //moves the lift up
-    private void intake() {
-        if(gamepad1.right_bumper){
-            rb.liftmotor.setTargetPosition(1);
+    private void liftEncoder() {
+        double x = rb.liftmotor.getCurrentPosition();
+        telemetry.addData("lift_current_pos", x);
+
+        if(gamepad2.dpad_up){
+            rb.liftmotor.setPower(0.8);
         }
-        if(gamepad1.left_bumper){
-            rb.liftmotor.setPower(-1);
+        else if(gamepad2.dpad_down ){
+            rb.liftmotor.setPower(-0.4);
         }
         else {
             rb.liftmotor.setPower(0);
         }
     }
 
-
-
-    // this controls the servo that is on the box
     private void servoBox() {
-        if(gamepad2.dpad_left){
-            rb.boxServo.setPosition(servoBoxStartingPosition + 0.2);
+        double x = rb.boxServo.getPosition();
+        telemetry.addData("servo_getPos", x);
+//            two button method:
+        if (gamepad2.a && servoPosition <= 0.9){
+            servoPosition += 0.1;
 
         }
-        if(gamepad2.dpad_right){
-            rb.boxServo.setPosition(servoBoxStartingPosition - 0.15);
+        if (gamepad2.b && servoPosition >= 0.1){
+            servoPosition -= 0.1;
         }
 
-        if(gamepad2.dpad_down){
-            rb.boxServo.setPosition(servoBoxStartingPosition);
-        }
+        rb.boxServo.setPosition(servoPosition);
 
+//            one button method:
+//            if(gamepad2.a){
+//                rb.boxServo.setPosition(rb.boxServo.getPosition() + 0.1);
+//
+//            }
+//            else {
+//                rb.boxServo.setPosition(servoBoxStartingPosition);
+//            }
+
+    }
+
+//        private void servoTest() {
+//            if(gamepad2.dpad_up) {
+//                telemetry.addData("Servo", rb.boxServo.getPosition());
+//                rb.boxServo.setPosition(x);
+//                x += 0.04;
+//            }
+//
+//        }
+
+
+    private void intake() {
+        if(gamepad2.right_bumper){
+            rb.intakemotor.setPower(1);
+        }
+        else if(gamepad2.left_bumper){
+            rb.intakemotor.setPower(-1);
+        }
+        else {
+            rb.intakemotor.setPower(0);
+        }
+    }
+
+    private void duck() {
+        if(gamepad1.a){
+            rb.duckmotor.setPower(0.5); // Test if either 1 or -1
+        }
+        else if(gamepad1.y){
+            rb.duckmotor.setPower(-0.5); // Test if either 1 or -1
+        }
+        else {
+            rb.duckmotor.setPower(0);
+        }
     }
 
 
     private void driveChassis() {
         double y = -gamepad1.left_stick_y;
-        double rx = gamepad1.right_stick_x * 1;
+        double rx = gamepad1.right_stick_y;
 
 
+        rb.flMotor.setPower(-y);
+        rb.blMotor.setPower(y);
+        rb.frMotor.setPower(rx);
+        rb.brMotor.setPower(rx);
+    }
+
+
+
+    private void driveChassis2() {
+        double y = -gamepad1.left_stick_x;
+        double rx = gamepad1.right_stick_y * 1;
 
         if(Math.abs(y) > Math.abs(rx)){
             frontLeftPower = y;
@@ -116,38 +180,7 @@ public class TankTeleOp extends OpMode {
         rb.blMotor.setPower(backLeftPower);
         rb.frMotor.setPower(frontRightPower);
         rb.brMotor.setPower(backRightPower);
-
-
-//        double r = Math.hypot(gamepad1.left_stick_x, gamepad1.left_stick_y);
-//        double robotAngle = Math.atan2(gamepad1.left_stick_y, gamepad1.left_stick_x) - Math.PI / 4;
-//        double rightX = gamepad1.right_stick_x;
-//        final double v1 = r * Math.cos(robotAngle) + rightX;
-//        final double v2 = r * Math.sin(robotAngle) - rightX;
-//        final double v3 = r * Math.sin(robotAngle) + rightX;
-//        final double v4 = r * Math.cos(robotAngle) - rightX;
-//
-//        rb.flMotor.setPower(v1);
-//        rb.blMotor.setPower(v2);
-//        rb.frMotor.setPower(v3);
-//        rb.brMotor.setPower(v4);
-
-
-//        float leftY = -gamepad1.left_stick_y;
-//        float leftX = gamepad1.left_stick_x;
-//        float rightX = gamepad1.right_stick_x;
-//
-//        double pow;
-//        if (gamepad1.right_trigger >= TRIGGER_THRESHOLD) {
-//            pow = DRIVE_POWER_SLOW;
-//        } else {
-//            pow = DRIVE_POWER;
-//        }
-//
-//        if (leftX * leftX + leftY * leftY >= DRIVE_STICK_THRESHOLD_SQUARED || Math.abs(rightX) >= DRIVE_STICK_THRESHOLD) {
-//            rb.drive(leftX, leftY, rightX, pow);
-//        } else {
-//            rb.driveStop();
-//        }
     }
 }
+
 
