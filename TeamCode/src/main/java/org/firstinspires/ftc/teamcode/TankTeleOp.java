@@ -83,11 +83,11 @@ import com.qualcomm.robotcore.util.ElapsedTime;
             double x = rb.boxServo.getPosition();
             telemetry.addData("servo_getPos", x);
 //            two button method:
-            if (gamepad2.a && servoPosition <= 0.9){
+            if (gamepad2.b && servoPosition <= 0.5){
                 servoPosition += 0.1;
 
             }
-            if (gamepad2.b && servoPosition >= 0.1){
+            if (gamepad2.a && servoPosition >= 0){
                 servoPosition -= 0.1;
             }
 
