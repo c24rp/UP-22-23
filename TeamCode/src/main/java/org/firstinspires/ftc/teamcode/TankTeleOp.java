@@ -32,6 +32,8 @@ public class TankTeleOp extends OpMode {
 
         liftmotorStartingPosition = rb.liftmotor.getCurrentPosition();
 
+        //rb.resetEncoder(rb.liftmotor);
+
 
         telemetry.addData("Status", "Initialized");
     }
@@ -39,7 +41,7 @@ public class TankTeleOp extends OpMode {
     @Override
     public void start() {
         runtime.reset();
-//            rb.resetEncoder(rb.liftmotor);
+        rb.resetEncoder(rb.liftmotor);
 
     }
 
@@ -67,6 +69,7 @@ public class TankTeleOp extends OpMode {
     private void liftEncoder() {
         double x = rb.liftmotor.getCurrentPosition();
         telemetry.addData("lift_current_pos", x);
+        telemetry.update();
 
         if(gamepad2.dpad_up){
             rb.liftmotor.setPower(0.8);
@@ -79,19 +82,35 @@ public class TankTeleOp extends OpMode {
         }
     }
 
-    private void servoBox() {
+    private void servoBoxbad() {
         double x = rb.boxServo.getPosition();
         telemetry.addData("servo_getPos", x);
 //            two button method:
-        if (gamepad2.a && servoPosition <= 0.9){
+        if (gamepad2.a && servoPosition <= 0.9) {
             servoPosition += 0.1;
 
         }
-        if (gamepad2.b && servoPosition >= 0.1){
+        if (gamepad2.b && servoPosition >= 0.1) {
             servoPosition -= 0.1;
         }
 
         rb.boxServo.setPosition(servoPosition);
+    }
+
+        private void servoBox(){
+            double x = rb.boxServo.getPosition();
+            telemetry.addData("servo_getPos", x);
+//            two button method:
+            if (gamepad2.a){
+                rb.boxServo.setPosition(0.67);
+
+            }
+            if (gamepad2.b){
+                rb.boxServo.setPosition(0.15);
+            }
+
+
+
 
 //            one button method:
 //            if(gamepad2.a){

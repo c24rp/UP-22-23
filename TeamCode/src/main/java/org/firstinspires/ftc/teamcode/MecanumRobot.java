@@ -62,7 +62,7 @@ public class MecanumRobot {
 
     void resetEncoder(DcMotor motor) {
         motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//        motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     void drive(double x_stick, double y_stick, double x_right_stick, double multiplier) {
