@@ -67,17 +67,16 @@ public class TankTeleOp extends OpMode {
 
 
     private void liftEncoder() {
-        double yup = gamepad2.left_stick_y;
-        double ydown = gamepad2.left_stick_y * 0.3;
+
         double x = rb.liftmotor.getCurrentPosition();
         telemetry.addData("lift_current_pos", x);
         telemetry.update();
 
         if(gamepad2.dpad_up && rb.liftmotor.getCurrentPosition() < 4600){
-            rb.liftmotor.setPower(0.8);
+            rb.liftmotor.setPower(1);
         }
         else if(gamepad2.dpad_down && rb.liftmotor.getCurrentPosition() > 0 ){
-            rb.liftmotor.setPower(-0.4);
+            rb.liftmotor.setPower(-0.5);
         }
 
 

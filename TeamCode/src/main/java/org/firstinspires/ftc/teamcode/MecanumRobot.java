@@ -90,8 +90,8 @@ public class MecanumRobot {
     }
 
     void driveForward(double power) {
-        flMotor.setPower(power);
-        blMotor.setPower(power);
+        flMotor.setPower(-power);
+        blMotor.setPower(-power);
         frMotor.setPower(-power);
         brMotor.setPower(-power);
     }
