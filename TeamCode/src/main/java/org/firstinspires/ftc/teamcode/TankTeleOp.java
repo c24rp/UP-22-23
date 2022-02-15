@@ -163,6 +163,10 @@ public class TankTeleOp extends OpMode {
 
 
     private void driveChassis() {
+        telemetry.addData("rightfront_getPos", rb.frMotor.getCurrentPosition());
+        telemetry.addData("leftfront_getPos", rb.flMotor.getCurrentPosition());
+        telemetry.addData("rightback_getPos", rb.brMotor.getCurrentPosition());
+        telemetry.addData("leftback_getPos", rb.blMotor.getCurrentPosition());
         double y = -gamepad1.left_stick_y;
         double rx = gamepad1.right_stick_y;
 

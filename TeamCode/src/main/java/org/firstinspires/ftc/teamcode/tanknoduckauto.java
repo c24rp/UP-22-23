@@ -39,9 +39,22 @@ public class tanknoduckauto extends LinearOpMode {
 
        waitForStart();
 
+
        runtime.reset();
 //       encoder auto
-       rb.driveForwardByEncoder(10, rb.frMotor, 1);
+//       rb.driveForwardByEncoder(-2, rb.blMotor, 1);
+//       rb.liftmotor.setTargetPosition(4000);
+//       rb.liftmotor.setPower(0.8);
+//
+//       Thread.sleep(7000);
+//       rb.liftmotor.setPower(0);
+//
+//       rb.boxServo.setPosition(0.67);
+//       Thread.sleep(1000);
+//       rb.boxServo.setPosition(0.15);
+
+
+       rb.driveForwardByEncoder(2, rb.blMotor, 1);
 
 
 //       turnClockWiseByTime(1000,-1);
