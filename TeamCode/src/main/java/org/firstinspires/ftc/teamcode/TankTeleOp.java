@@ -72,10 +72,30 @@ public class TankTeleOp extends OpMode {
         telemetry.addData("lift_current_pos", x);
         telemetry.update();
 
-        if(gamepad2.dpad_up && rb.liftmotor.getCurrentPosition() < 4600){
+        if(gamepad2.dpad_up && rb.liftmotor.getCurrentPosition() < 3200){
             rb.liftmotor.setPower(1);
         }
         else if(gamepad2.dpad_down && rb.liftmotor.getCurrentPosition() > 0 ){
+            rb.liftmotor.setPower(-0.5);
+        }
+
+
+
+        else {
+            rb.liftmotor.setPower(0);
+        }
+    }
+
+    private void lift() {
+
+        double x = rb.liftmotor.getCurrentPosition();
+        telemetry.addData("lift_current_pos", x);
+        telemetry.update();
+
+        if(gamepad2.dpad_up){
+            rb.liftmotor.setPower(0.5);
+        }
+        else if(gamepad2.dpad_down){
             rb.liftmotor.setPower(-0.5);
         }
 

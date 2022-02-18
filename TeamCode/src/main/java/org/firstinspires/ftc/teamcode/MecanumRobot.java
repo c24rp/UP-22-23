@@ -46,7 +46,7 @@ public class MecanumRobot {
         blMotor.setDirection(DcMotor.Direction.FORWARD);
         brMotor.setDirection(DcMotor.Direction.FORWARD);
         duckmotor.setDirection(DcMotor.Direction.REVERSE);
-        liftmotor.setDirection(DcMotor.Direction.REVERSE);
+        liftmotor.setDirection(DcMotor.Direction.FORWARD);
         intakemotor.setDirection(DcMotor.Direction.REVERSE);
 
         // Set all motors to brake when power is zero
@@ -105,7 +105,7 @@ public class MecanumRobot {
 
     void turnClockwise(double power) {
         flMotor.setPower(-power);
-        blMotor.setPower(-power);
+        blMotor.setPower(power);
         frMotor.setPower(power);
         brMotor.setPower(power);
     }
@@ -161,6 +161,33 @@ public class MecanumRobot {
             driveStop();
         }
 
+
+
+    }
+
+
+
+
+    void liftByEncoder(double inches, DcMotor motor, double power) {
+        power = Math.abs(power);
+        double positionChange = inches * COUNTS_PER_INCH;
+        int oldPosition = motor.getCurrentPosition();
+        double targetPosition = oldPosition + positionChange; // minus not plus, flipped motor
+
+        if (positionChange > 0) {
+            liftmotor.setPower(power);
+            while (opMode.opModeIsActive() && motor.getCurrentPosition() < targetPosition) {
+                opMode.telemetry.addData("auto", motor.getCurrentPosition());
+                Thread.yield();
+            }
+            liftmotor.setPower(0);
+        } else if (positionChange < 0) {
+            liftmotor.setPower(-power);
+            while (opMode.opModeIsActive() && motor.getCurrentPosition() > targetPosition) {
+                Thread.yield();
+            }
+            liftmotor.setPower(0);
+        }
     }
 
     void strafeRightByEncoder(double inches, DcMotor motor, double power) {
@@ -188,17 +215,17 @@ public class MecanumRobot {
         double positionChange = COUNTS_PER_INCH * inches;
         power = Math.abs(power);
         int oldPosition = motor.getCurrentPosition();
-        double targetPosition = oldPosition - positionChange;
+        double targetPosition = oldPosition + positionChange;
 
         if (positionChange > 0) {
             turnClockwise(power);
-            while (opMode.opModeIsActive() && motor.getCurrentPosition() > targetPosition) {
+            while (opMode.opModeIsActive() && motor.getCurrentPosition() < targetPosition) {
                 Thread.yield();
             }
             driveStop();
         } else if (positionChange < 0) {
             turnClockwise(-power);
-            while (opMode.opModeIsActive() && motor.getCurrentPosition() < targetPosition) {
+            while (opMode.opModeIsActive() && motor.getCurrentPosition() > targetPosition) {
                 Thread.yield();
             }
             driveStop();
