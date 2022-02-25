@@ -46,9 +46,9 @@ public class tanknoduckautofar extends LinearOpMode {
        // below is the hard-coded auto
        driveForwardByTime(300, -1);
        duckByTime(1000, 0.5);
-       turnClockWiseByTime(800,1);
+       turnClockWiseByTime(800,0.5);
        driveForwardByTime(1000, 1);
-       turnClockWiseByTime(800, -1);
+       turnClockWiseByTime(-800, 0.5);
        driveForwardByTime(3000, 1);
    }
 

@@ -48,7 +48,7 @@ public class blueducktank extends LinearOpMode {
 //       encoder auto
        rb.driveForwardByEncoder(-30, rb.blMotor, 1);
        Thread.sleep(500);
-       rb.turnClockwiseByEncoder(-7, rb.blMotor, 1);
+       rb.turnClockwiseByEncoder(-7, rb.blMotor, 0.5);
        Thread.sleep(500);
 
        rb.liftmotor.setTargetPosition(3200);
@@ -59,9 +59,9 @@ public class blueducktank extends LinearOpMode {
 
 
 
-       rb.boxServo.setPosition(0.67);
+       rb.boxServo.setPosition(0.92);
        Thread.sleep(1500);
-       rb.boxServo.setPosition(0.15);
+       rb.boxServo.setPosition(0.40);
        Thread.sleep(1000);
 
        rb.liftmotor.setTargetPosition(0);
@@ -74,19 +74,19 @@ public class blueducktank extends LinearOpMode {
 
 
 
-       rb.turnClockwiseByEncoder(-5, rb.blMotor, 1);
-       Thread.sleep(500);
+       rb.turnClockwiseByEncoder(-5, rb.blMotor, 0.5);
+       Thread.sleep(100);
        rb.driveForwardByEncoder(40, rb.blMotor, 1);
-       Thread.sleep(500);
-       rb.turnClockwiseByEncoder(7, rb.blMotor, 1);
-       Thread.sleep(500);
-       rb.driveForwardByEncoder(6.5, rb.blMotor, 0.4);
+       Thread.sleep(150);
+       rb.turnClockwiseByEncoder(7, rb.blMotor, 0.5);
+       Thread.sleep(150);
+       rb.driveForwardByEncoder(8, rb.blMotor, 0.4);
        duckByTime(2000, -0.5);
-       Thread.sleep(2500);
+       Thread.sleep(2300);
 
 
-       rb.turnClockwiseByEncoder(-11.5, rb.blMotor, 1);
-       Thread.sleep(500);
+       rb.turnClockwiseByEncoder(-12.5, rb.blMotor, 0.5);
+       Thread.sleep(100);
        rb.driveForwardByEncoder(-155, rb.blMotor, 1);
 
 
