@@ -48,10 +48,10 @@ public class blueducktank extends LinearOpMode {
 //       encoder auto
        rb.driveForwardByEncoder(-30, rb.blMotor, 1);
        Thread.sleep(500);
-       rb.turnClockwiseByEncoder(-7, rb.blMotor, 0.5);
+       rb.turnClockwiseByEncoder(-8, rb.blMotor, 0.5);
        Thread.sleep(500);
 
-       rb.liftmotor.setTargetPosition(3200);
+       rb.liftmotor.setTargetPosition(3600);
        rb.liftmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
        rb.liftmotor.setPower(0.5);
        Thread.sleep(2500);
@@ -79,13 +79,22 @@ public class blueducktank extends LinearOpMode {
        rb.driveForwardByEncoder(40, rb.blMotor, 1);
        Thread.sleep(150);
        rb.turnClockwiseByEncoder(7, rb.blMotor, 0.5);
-       Thread.sleep(150);
+
        rb.driveForwardByEncoder(8, rb.blMotor, 0.4);
-       duckByTime(2000, -0.5);
+
+       telemetry.addData("Status", "Duck");
+
+       telemetry.update();
+
+       rb.duckmotor.setPower(-0.6);
+       telemetry.addData("Status", "Ducked");
+
+       telemetry.update();
        Thread.sleep(2300);
+       rb.duckmotor.setPower(0.6);
 
 
-       rb.turnClockwiseByEncoder(-12.5, rb.blMotor, 0.5);
+       rb.turnClockwiseByEncoder(-14, rb.blMotor, 0.5);
        Thread.sleep(100);
        rb.driveForwardByEncoder(-155, rb.blMotor, 1);
 

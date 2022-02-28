@@ -45,10 +45,9 @@ public class parkingauto extends LinearOpMode {
 
 
         //if we start close to the parking space
-        rb.driveForwardByEncoder(20, rb.blMotor, 1);
+        rb.driveForwardByEncoder(10, rb.blMotor, 1);
 
-        //if we start far from the parking space
-        rb.driveForwardByEncoder(120, rb.blMotor, 1);
+
     }
 
 }

@@ -14,8 +14,8 @@ import org.openftc.easyopencv.OpenCvWebcam;
 import java.util.LinkedList;
 
 
-@Autonomous(name = "bluenoducktank")
-public class bluenoducktank extends LinearOpMode {
+@Autonomous(name = "rednoducktank")
+public class rednoducktank extends LinearOpMode {
 
     /**
      * Amount of time elapsed
@@ -113,26 +113,26 @@ public class bluenoducktank extends LinearOpMode {
 //       encoder auto
         rb.driveForwardByEncoder(-30, rb.blMotor, 1);
         Thread.sleep(500);
-        rb.turnClockwiseByEncoder(8, rb.blMotor, 1);
+        rb.turnClockwiseByEncoder(-8, rb.blMotor, 1);
         Thread.sleep(500);
 
         if(level == 1) {
-            rb.liftmotor.setTargetPosition(1200);
+            rb.liftmotor.setTargetPosition(2600);
             rb.liftmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             rb.liftmotor.setPower(1);
             telemetry.addData("Shipping Hub Level", level);
             telemetry.update();
-            Thread.sleep(700);
+            Thread.sleep(1500);
         } else if (level == 2) {
             rb.liftmotor.setTargetPosition(2600);
             rb.liftmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             rb.liftmotor.setPower(0.5);
-            Thread.sleep(1000);
+            Thread.sleep(1500);
         } else {
-            rb.liftmotor.setTargetPosition(3200);
+            rb.liftmotor.setTargetPosition(3700);
             rb.liftmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             rb.liftmotor.setPower(1);
-            Thread.sleep(1000);
+            Thread.sleep(1500);
         }
 
 
@@ -152,7 +152,7 @@ public class bluenoducktank extends LinearOpMode {
         Thread.sleep(2000);
 
 
-        rb.turnClockwiseByEncoder(10, rb.blMotor, 0.5);
+        rb.turnClockwiseByEncoder(-10, rb.blMotor, 0.5);
         Thread.sleep(100);
         rb.driveForwardByEncoder(50, rb.blMotor, 1);
 

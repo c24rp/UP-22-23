@@ -27,12 +27,12 @@ public class ShippingElementRecognizer extends OpenCvPipeline {
     // Recognizes the shipping hub level based on where the team shipping element is located
     // Create two possible boxes it can be in
     static final Rect LEFTBOX = new Rect(
-            new Point(0, 0),
-            new Point(120, 40)
+            new Point(0, 60),
+            new Point(120, 100)
     );
     static final Rect RIGHTBOX = new Rect(
-            new Point(121, 0),
-            new Point(240, 40)
+            new Point(121, 60),
+            new Point(240, 100)
     );
 
     @Override

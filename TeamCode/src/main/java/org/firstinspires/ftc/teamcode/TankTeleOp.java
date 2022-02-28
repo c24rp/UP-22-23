@@ -133,6 +133,15 @@ public class TankTeleOp extends OpMode {
                 rb.boxServo.setPosition(0.40);
             }
 
+            if (gamepad2.x){
+                rb.boxServo.setPosition(0.25);
+            }
+
+            if (gamepad2.y){
+                rb.boxServo.setPosition(0.6);
+
+            }
+
 
 
 
@@ -171,10 +180,10 @@ public class TankTeleOp extends OpMode {
 
     private void duck() {
         if(gamepad1.a){
-            rb.duckmotor.setPower(0.5); // Test if either 1 or -1
+            rb.duckmotor.setPower(0.85); // Test if either 1 or -1
         }
         else if(gamepad1.y){
-            rb.duckmotor.setPower(-0.5); // Test if either 1 or -1
+            rb.duckmotor.setPower(-0.85); // Test if either 1 or -1
         }
         else {
             rb.duckmotor.setPower(0);
@@ -200,20 +209,20 @@ public class TankTeleOp extends OpMode {
 
 
     private void driveChassis2() {
-        double y = -gamepad1.left_stick_x;
-        double rx = gamepad1.right_stick_y * 1;
+        double y = gamepad1.left_stick_y * 1;
+        double rx = gamepad1.right_stick_x * 0.8;
 
         if(Math.abs(y) > Math.abs(rx)){
-            frontLeftPower = y;
+            frontLeftPower = -y;
             backLeftPower = y;
-            frontRightPower = y;
-            backRightPower = y;
+            frontRightPower = -y;
+            backRightPower = -y;
         }
         else if(Math.abs(y) < Math.abs(rx)){
-            frontLeftPower = rx;
+            frontLeftPower = -rx;
             backLeftPower = rx;
-            frontRightPower = -rx;
-            backRightPower = -rx;
+            frontRightPower = rx;
+            backRightPower = rx;
         }
 
         else {
