@@ -87,7 +87,7 @@ public class redducktank extends LinearOpMode {
         Thread.sleep(500);
         duckByTime(2000, 0.5);
         Thread.sleep(2500);
-        rb.turnClockwiseByEncoder(20, rb.blMotor, 1);
+        rb.turnClockwiseByEncoder(5.5, rb.blMotor, 1);
         Thread.sleep(500);
         rb.driveForwardByEncoder(-155, rb.blMotor, 1);
 

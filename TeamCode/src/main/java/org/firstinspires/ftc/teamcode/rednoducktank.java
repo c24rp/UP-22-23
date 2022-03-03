@@ -60,7 +60,7 @@ public class rednoducktank extends LinearOpMode {
 
             @Override
             public void onOpened() {
-                webcam.startStreaming(320, 240, OpenCvCameraRotation.SIDEWAYS_LEFT);
+                webcam.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
                 telemetry.addData("Status", "Webcam on");
 
                 telemetry.update();
@@ -117,22 +117,22 @@ public class rednoducktank extends LinearOpMode {
         Thread.sleep(500);
 
         if(level == 1) {
-            rb.liftmotor.setTargetPosition(2600);
+            rb.liftmotor.setTargetPosition(1500);
             rb.liftmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             rb.liftmotor.setPower(1);
             telemetry.addData("Shipping Hub Level", level);
             telemetry.update();
-            Thread.sleep(1500);
+            Thread.sleep(2000);
         } else if (level == 2) {
             rb.liftmotor.setTargetPosition(2600);
             rb.liftmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             rb.liftmotor.setPower(0.5);
-            Thread.sleep(1500);
+            Thread.sleep(2000);
         } else {
-            rb.liftmotor.setTargetPosition(3700);
+            rb.liftmotor.setTargetPosition(3500);
             rb.liftmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             rb.liftmotor.setPower(1);
-            Thread.sleep(1500);
+            Thread.sleep(2000);
         }
 
 

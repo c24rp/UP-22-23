@@ -126,11 +126,11 @@ public class TankTeleOp extends OpMode {
             telemetry.addData("servo_getPos", x);
 //            two button method:
             if (gamepad2.a){
-                rb.boxServo.setPosition(0.92);
+                rb.boxServo.setPosition(0.98);
 
             }
             if (gamepad2.b){
-                rb.boxServo.setPosition(0.40);
+                rb.boxServo.setPosition(0.46);
             }
 
             if (gamepad2.x){
