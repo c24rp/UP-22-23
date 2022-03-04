@@ -133,14 +133,14 @@ public class TankTeleOp extends OpMode {
                 rb.boxServo.setPosition(0.46);
             }
 
-            if (gamepad2.x){
-                rb.boxServo.setPosition(0.25);
-            }
-
-            if (gamepad2.y){
-                rb.boxServo.setPosition(0.6);
-
-            }
+//            if (gamepad2.x){
+//                rb.capServo.setPosition(0.7);
+//            }
+//
+//            if (gamepad2.y){
+//                rb.capServo.setPosition(0.4);
+//
+//            }
 
 
 
